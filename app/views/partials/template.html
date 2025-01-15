@@ -7,127 +7,89 @@
     <link rel="stylesheet" href="https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css" />
     <script src="https://cdn.tailwindcss.com"></script>
 
-    <title>Document</title>
+    <title>Responsive Layout</title>
 </head>
 
-<body class="flex h-screen">
-    <!-- Sidebar -->
-    <div id="sidebar"
-        class="fixed flex flex-col sm:w-[50%] md:w-[30%] lg:[18%] bg-white overflow-hidden transition-all duration-300 transform lg:transform-none lg:static h-full z-40 border-r-2 hidden lg:block mt-[70px] lg:mt-0">
-        <div class="flex items-center justify-center h-20">
-            <img src="../../../public/images/logo.png" alt="logo" class="w-32" />
-        </div>
-        <ul class="flex flex-col py-4 pl-4">
-            <li>
-                <a href="#" class="flex flex-row items-center h-12 text-gray-500 hover:text-gray-800">
-                    <span class="inline-flex items-center justify-center h-12 w-12 text-lg text-gray-400">
-                        <i class="bx bx-home"></i>
-                    </span>
-                    <span class="text-sm font-medium">Dashboard</span>
-                </a>
-            </li>
-            <li>
-                <a href="#" class="flex flex-row items-center h-12 text-gray-500 hover:text-gray-800">
-                    <span class="inline-flex items-center justify-center h-12 w-12 text-lg text-gray-400">
-                        <i class="bx bx-music"></i>
-                    </span>
-                    <span class="text-sm font-medium">Music</span>
-                </a>
-            </li>
-            <li>
-                <a href="#" class="flex flex-row items-center h-12 text-gray-500 hover:text-gray-800">
-                    <span class="inline-flex items-center justify-center h-12 w-12 text-lg text-gray-400">
-                        <i class="bx bx-drink"></i>
-                    </span>
-                    <span class="text-sm font-medium">Drink</span>
-                </a>
-            </li>
-            <li>
-                <a href="#" class="flex flex-row items-center h-12 text-gray-500 hover:text-gray-800">
-                    <span class="inline-flex items-center justify-center h-12 w-12 text-lg text-gray-400">
-                        <i class="bx bx-shopping-bag"></i>
-                    </span>
-                    <span class="text-sm font-medium">Shopping</span>
-                </a>
-            </li>
-            <li>
-                <a href="#" class="flex flex-row items-center h-12 text-gray-500 hover:text-gray-800">
-                    <span class="inline-flex items-center justify-center h-12 w-12 text-lg text-gray-400">
-                        <i class="bx bx-chat"></i>
-                    </span>
-                    <span class="text-sm font-medium">Chat</span>
-                </a>
-            </li>
-            <li>
-                <a href="#" class="flex flex-row items-center h-12 text-gray-500 hover:text-gray-800">
-                    <span class="inline-flex items-center justify-center h-12 w-12 text-lg text-gray-400">
-                        <i class="bx bx-user"></i>
-                    </span>
-                    <span class="text-sm font-medium">Profile</span>
-                </a>
-            </li>
-            <li>
-                <a href="#" class="flex flex-row items-center h-12 text-gray-500 hover:text-gray-800">
-                    <span class="inline-flex items-center justify-center h-12 w-12 text-lg text-gray-400">
-                        <i class="bx bx-bell"></i>
-                    </span>
-                    <span class="text-sm font-medium">Notifications</span>
-                    <span class="ml-auto mr-6 text-sm bg-red-100 rounded-full px-3 py-px text-red-500">5</span>
-                </a>
-            </li>
-            <li>
-                <a href="#" class="flex flex-row items-center h-12 text-gray-500 hover:text-gray-800">
-                    <span class="inline-flex items-center justify-center h-12 w-12 text-lg text-gray-400">
-                        <i class="bx bx-log-out"></i>
-                    </span>
-                    <span class="text-sm font-medium">Logout</span>
-                </a>
-            </li>
-        </ul>
-    </div>
-
-    <div class="flex flex-col w-full lg:w-[82%] ml-auto">
-        <!-- Header -->
-        <header class="flex py-4 px-4 sm:px-10 font-[sans-serif] min-h-[60px] tracking-wide relative z-50 w-full">
-            <div class="flex flex-wrap items-center justify-between gap-4 w-full">
-                <div class="flex items-center ml-auto space-x-6">
-                    <button class="font-semibold text-[15px] border-none outline-none">
-                        <a href="javascript:void(0)" class="text-[#2E5077] hover:underline">Login</a>
-                    </button>
-                    <button
-                        class="px-4 py-2 text-sm rounded-sm font-bold text-white border-2 border-[#2E5077] bg-[#2E5077] transition-all ease-in-out duration-300 hover:bg-transparent hover:text-[#2E5077]">
-                        Sign up
-                    </button>
-
-                    <button id="toggleOpen" class="lg:hidden">
-                        <svg class="w-7 h-7" fill="#333" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd"
-                                d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
-                                clip-rule="evenodd"></path>
-                        </svg>
-                    </button>
-                </div>
+<body class="h-screen flex flex-col">
+    <div class="flex flex-1">
+        <!-- Sidebar -->
+        <div id="sidebar"
+            class="fixed top-0 left-0 h-full w-64 bg-white shadow-md z-40 transform -translate-x-full lg:translate-x-0 transition-transform duration-300 lg:static border-r-2">
+            <div class="flex items-center justify-center h-20">
+                <img src="../../../public/images/logo.png" alt="logo" class="w-32" />
             </div>
-        </header>
+            <ul class="flex flex-col py-4 pl-4">
+                <li>
+                    <a href="#" class="flex items-center h-12 text-gray-500 hover:text-gray-800">
+                        <i class="bx bx-home text-lg text-gray-400 w-12"></i>
+                        <span class="text-sm font-medium">Dashboard</span>
+                    </a>
+                </li>
+                <!-- Additional menu items here -->
+                <li>
+                    <a href="#" class="flex items-center h-12 text-gray-500 hover:text-gray-800">
+                        <i class="bx bx-log-out text-lg text-gray-400 w-12"></i>
+                        <span class="text-sm font-medium">Logout</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
 
         <!-- Main Content -->
-        <main class="flex-1 bg-gray-100 h-screen overflow-y-auto p-5 rounded border-t-2">
-            <h1 class="text-xl font-semibold">Main Content</h1>
-            <p>This is the main content section. It has an overflow so that when the content is too long, it will
-                scroll.</p>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin et dui velit. Integer vulputate erat a
-                tristique tincidunt. Integer euismod felis sed nisl auctor, ac congue velit cursus.</p>
-            <p>Donec maximus eu libero eu sodales. Pellentesque id eros ac felis tincidunt consequat. Sed malesuada
-                nulla eget est fermentum gravida.</p>
-        </main>
+        <div class="flex flex-col flex-1">
+            <!-- Header -->
+            <header class="flex items-center justify-between px-4 py-4 bg-gray-50 shadow lg:py-6">
+                <button id="toggleOpen" class="lg:hidden">
+                    <svg class="w-7 h-7" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd"
+                            d="M3 5h14a1 1 0 100-2H3a1 1 0 100 2zm0 6h14a1 1 0 100-2H3a1 1 0 100 2zm0 6h14a1 1 0 100-2H3a1 1 0 100 2z"
+                            clip-rule="evenodd"></path>
+                    </svg>
+                </button>
+                <div class="flex items-center space-x-4">
+                    <a href="#" class="text-[#2E5077] hover:underline font-semibold">Login</a>
+                    <button
+                        class="px-4 py-2 text-sm font-bold text-white bg-[#2E5077] border-2 border-[#2E5077] rounded transition hover:bg-transparent hover:text-[#2E5077]">
+                        Sign up
+                    </button>
+                </div>
+            </header>
+
+            <!-- Main -->
+            <main class="flex-1 p-6 bg-gray-100 overflow-y-auto">
+                <h1 class="text-xl font-semibold">Main Content</h1>
+                <p>
+                    This is the main content section. It has an overflow so that when the content is too long, it will
+                    scroll.
+                </p>
+            </main>
+        </div>
     </div>
 
-    <!-- Script to toggle sidebar visibility on small screens -->
+    <!-- Footer -->
+    <footer class="text-center py-4 bg-gray-200 text-sm text-gray-600">
+        &copy; 2025 Your Company. All rights reserved.
+    </footer>
+
+    <!-- Sidebar Toggle Script -->
     <script>
+        document.addEventListener('click', function (event) {
+            const sidebar = document.getElementById('sidebar');
+            const toggleButton = document.getElementById('toggleOpen');
+
+            // Check if the click is outside the sidebar and toggle button
+            if (!sidebar.contains(event.target) && !toggleButton.contains(event.target)) {
+                if (!sidebar.classList.contains('-translate-x-full')) {
+                    sidebar.classList.add('-translate-x-full'); // Hide the sidebar
+                }
+            }
+        });
+
         document.getElementById('toggleOpen').addEventListener('click', function () {
             const sidebar = document.getElementById('sidebar');
-            sidebar.classList.toggle('hidden');
+            sidebar.classList.toggle('-translate-x-full'); // Toggle sidebar visibility
         });
+
     </script>
 </body>
 
