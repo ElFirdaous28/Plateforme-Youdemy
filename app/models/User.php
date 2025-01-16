@@ -15,7 +15,17 @@ class User extends Db
         $stmt->execute();
         return $stmt->fetch(PDO::FETCH_COLUMN);
     }
+    // // metohode to get user by id
+    // public function getUserById($idUser)
+    // {
+    //     $stmt = $this->conn->prepare("SELECT * FROM utilisateurs WHERE id_utilisateur = ?");
+    //     $stmt->execute([$idUser]);
+    //     $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
+    //     return $user;
+    // }
+
+    // register method
     public function register($user)
     {
 
@@ -27,7 +37,7 @@ class User extends Db
             echo "Error: " . $e->getMessage();
         }
     }
-
+    // login method
     public function login($userData)
     {
 
@@ -42,6 +52,34 @@ class User extends Db
         } catch (PDOException $e) {
             echo "Error: " . $e->getMessage();
         }
+    }
+
+    // methode to get all users
+    public function getAllUsers()
+    {
+        $resul = $this->conn->prepare("SELECT * FROM users WHERE role !='admin' AND status!='inactive' ");
+        $resul->execute();
+
+        $users = $resul->fetchAll(PDO::FETCH_ASSOC);
+        return $users;
+    }
+
+    // method to delete a user
+    public function deleteUser($userId)
+    {
+        try {
+            $deleteUser = $this->conn->prepare("DELETE FROM users WHERE user_id=?");
+            $deleteUser->execute([$userId]);
+        } catch (PDOException $e) {
+            error_log("error deltting user: " . $e->getMessage());
+        }
+    }
+
+    // methode to achange user status
+    public function setUserStatus($idUser,$newStatus)
+    {
+        $changeStatus = $this->conn->prepare("UPDATE users SET status=? WHERE user_id=?");
+        $changeStatus->execute([$newStatus, $idUser]);
     }
 
     // public function getStatistics() {
@@ -70,53 +108,9 @@ class User extends Db
     //     return $statistics;
     // }
 
-    // public function getAllUsers($filter, $userToSearch =''){
 
 
 
-    //         $query = "SELECT * FROM utilisateurs WHERE role != 1"; // by default we show all users except admins
 
-    //         // add filter to query
-    //         if ($filter == 'clients') {
-    //             $query .= " AND role = 2";
-    //         } elseif ($filter == 'freelancers') {
-    //             $query .= " AND role = 3";
-    //         }
-
-    //         // add search condition to query
-    //         if ($userToSearch) {
-    //             $query .= " AND nom_utilisateur LIKE ?";
-    //         }
-
-    //         $resul = $this->conn->prepare($query);
-    //         $resul->execute($userToSearch ? ["%$userToSearch%"] : []);
-
-    //         // Fetch and return results
-    //         $users = $resul->fetchAll(PDO::FETCH_ASSOC);
-    //         return $users;
-    // }
-
-    // public function getUserById($idUser){
-    //     $stmt = $this->conn->prepare("SELECT * FROM utilisateurs WHERE id_utilisateur = ?");
-    //     $stmt->execute([$idUser]);
-    //     $user = $stmt->fetch(PDO::FETCH_ASSOC);
-
-    //     return $user;
-    // }
-
-    // public function changeUserStatus($idUser){
-    //     // get the old status
-    //     $currentUser=$this->getUserById($idUser);
-    //     $currentStatus = $currentUser["is_active"];
-
-    //     $changeStatus = $this->conn->prepare("UPDATE utilisateurs SET is_active=? WHERE id_utilisateur=?");
-    //     $changeStatus->execute([$currentStatus==0?1:0,$idUser]);
-    // }
-
-    // // method to remove a user
-    // public function removeUser($idUser){
-    //     $removeUser = $this->conn->prepare("DELETE FROM utilisateurs WHERE id_utilisateur=?");
-    //     $removeUser->execute([$idUser]);
-    // }
 
 }
