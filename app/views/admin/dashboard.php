@@ -17,7 +17,7 @@
         <div class="flex flex-col flex-1 lg:ml-64">
         <?php include(__DIR__.'/../partials/sidebar.php');?>
             <!-- Main -->
-            <main class="flex-1 bg-gray-100 min-h-screen overflow-y-auto pt-24 px-20">
+            <main class="flex-1 bg-gray-100 min-h-screen overflow-y-auto py-24 px-20">
                 <h1>this is the admin main content</h1>
             </main>
         </div>

@@ -17,7 +17,7 @@
         <div class="flex flex-col flex-1 lg:ml-64">
             <?php include(__DIR__ . '/../partials/sidebar.php'); ?>
             <!-- Main -->
-            <main class="flex-1 bg-gray-100 min-h-screen overflow-y-auto pt-24 px-20">
+            <main class="flex-1 bg-gray-100 min-h-screen overflow-y-auto py-24 px-20">
                 <h1 class="text-xl font-bold text-gray-700 my-10">Users</h1>
                 <!-- fiter and search -->
                 <div class="flex items-center justify-between space-x-4 bg-white p-4 px-8 rounded-lg shadow-md">
