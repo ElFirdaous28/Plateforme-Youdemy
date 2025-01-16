@@ -50,9 +50,9 @@ class Router
         }
 
         // Handle 404
-        // http_response_code(404);
-        //   echo "404 - Not Found";
-        header("Location: /unauthorized");
-        exit();
+        http_response_code(404);
+          echo "404 - Not Found";
+        // header("Location: /unauthorized");
+        // exit();
     }
 }
