@@ -58,7 +58,6 @@ Route::post('/admin/editTag/{tagId}', [AdminController::class, 'editTag']);
 Route::post('/admin/deleteTag/{tag_id}', [AdminController::class, 'deleteTag']);
 
 
-
 // teacher routes
 Route::get('/teacher/dashboard', [BaseController::class, 'dashboard']);
 

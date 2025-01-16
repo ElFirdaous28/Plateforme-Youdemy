@@ -10,7 +10,7 @@ class Category extends Db
     // methode to get all categories
     public function getAllCategories()
     {
-        $resul = $this->conn->prepare("SELECT * FROM categories");
+        $resul = $this->conn->prepare("SELECT * FROM categories ORDER BY category_id");
         $resul->execute();
 
         $categories = $resul->fetchAll(PDO::FETCH_ASSOC);
