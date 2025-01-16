@@ -11,7 +11,7 @@ class Tag extends Db
     // method to get all tags
     public function getAllTags()
     {
-        $result = $this->conn->prepare("SELECT * FROM tags");
+        $result = $this->conn->prepare("SELECT * FROM tags ORDER BY tag_id");
         $result->execute();
 
         $tags = $result->fetchAll(PDO::FETCH_ASSOC);

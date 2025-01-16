@@ -61,7 +61,7 @@ class User extends Db
     // methode to get all users
     public function getAllUsers()
     {
-        $resul = $this->conn->prepare("SELECT * FROM users WHERE role !='admin' AND status!='inactive' ");
+        $resul = $this->conn->prepare("SELECT * FROM users WHERE role !='admin' AND status!='inactive' ORDER BY user_id");
         $resul->execute();
 
         $users = $resul->fetchAll(PDO::FETCH_ASSOC);
