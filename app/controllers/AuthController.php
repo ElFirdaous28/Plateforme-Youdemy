@@ -7,7 +7,7 @@ class AuthController extends BaseController
     public function __construct()
     {
 
-        // $this->UserModel = new User();
+        $this->UserModel = new User();
     }
 
     public function showRegister()
@@ -15,70 +15,66 @@ class AuthController extends BaseController
 
         $this->render('auth/register');
     }
-    // public function showleLogin()
-    // {
+    public function showleLogin()
+    {
 
-    //     $this->render('auth/login');
-    // }
+        $this->render('auth/login');
+    }
 
-    // public function handleRegister()
-    // {
+    public function handleRegister()
+    {
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            $number_of_users=$this->UserModel->getNumberOfUsers();
 
+            if (isset($_POST['register'])) {
+                $full_name = $_POST['full_name'];
+                $email = $_POST['email'];
+                $password = $_POST['password'];
+                $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+                // status has also to take a value!!!
 
-    //     if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    //         if (isset($_POST['signup'])) {
-    //             $full_name = $_POST['full_name'];
-    //             $email = $_POST['email'];
-    //             $role = $_POST['role'];
-    //             $password = $_POST['password'];
-    //             $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+                $role =$number_of_users == 0 ? "admin": $_POST['role'];
 
-    //             $user = [$full_name, $hashed_password, $email, $role];
+                $user = [$full_name, $email, $hashed_password, $role];
 
+                $lastInsertId = $this->UserModel->register($user);
+                $_SESSION['user_loged_in_id'] = $lastInsertId;
+                $_SESSION['user_loged_in_role'] = $role;
 
+                if ($lastInsertId && $role == "admin") {
+                    header('Location: /admin/dashboard');
+                } else if ($lastInsertId && $role == "teacher") {
+                    header('Location: /teacher/dashboard');
+                } else if ($lastInsertId && $role == "student") {
+                    header('Location: /student/dashboard');
+                }
+                exit;
+            }
+        }
+    }
+    public function handleLogin()
+    {
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            if (isset($_POST['login'])) {
+                $email = $_POST['email'];
+                $password = $_POST['password'];
+                $userData = [$email, $password];
+                $user = $this->UserModel->login($userData);
+                $role = $user['role'];
+                $_SESSION['user_loged_in_id'] = $user["id_utilisateur"];
+                $_SESSION['user_loged_in_role'] = $role;
+                $_SESSION['user_loged_in_nome'] = $user['nom_utilisateur'];
 
-    //             $lastInsertId = $this->UserModel->register($user);
-
-    //             $_SESSION['user_loged_in_id'] = $lastInsertId;
-    //             $_SESSION['user_loged_in_role'] = $role;
-
-    //             if ($lastInsertId && $role == 1) {
-    //                 header('Location: admin/dashboard');
-    //             } else if ($lastInsertId && $role == 2) {
-    //                 header('Location: client/dashboard');
-    //             } else if ($lastInsertId && $role == 3) {
-    //                 header('Location: freelancer/dashboard');
-    //             }
-    //             exit;
-    //         }
-    //     }
-    // }
-    // public function handleLogin()
-    // {
-
-
-    //     if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    //         if (isset($_POST['login'])) {
-    //             $email = $_POST['email'];
-    //             $password = $_POST['password'];
-    //             $userData = [$email, $password];
-    //             $user = $this->UserModel->login($userData);
-    //             // var_dump($user);die();
-    //             $role = $user['role'];
-    //             $_SESSION['user_loged_in_id'] = $user["id_utilisateur"];
-    //             $_SESSION['user_loged_in_role'] = $role;
-    //             $_SESSION['user_loged_in_nome'] = $user['nom_utilisateur'];
-
-    //             if ($user && $role == 1) {
-    //                 header('Location: /admin/dashboard');
-    //             } else if ($user && $role == 2) {
-    //                 header('Location: /client/dashboard');
-    //             } else if ($user && $role == 3) {
-    //                 header('Location: /freelancer/dashboard');
-    //             }
-    //         }
-    //     }
-    // }
+                if ($user && $role == "admin") {
+                    header('Location: /admin/dashboard');
+                } else if ($user && $role == "teacher") {
+                    header('Location: /teacher/dashboard');
+                } else if ($user && $role == "student") {
+                    header('Location: /student/dashboard');
+                }
+            }
+        }
+    }
 
     // public function logout()
     // {
