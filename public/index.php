@@ -17,6 +17,9 @@ Route::setRouter($router);
 $baseController= new BaseController();
 $baseController->checkRole();
 
+if (!isset($_SESSION['csrf_token'])) {
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+}
 
 // Define routes
 
@@ -41,6 +44,12 @@ Route::post('/admin/changeUserStatus/{user_id}', [AdminController::class, 'chang
 // inactive teachers managemt routes
 Route::get('/admin/inactiveTeachers', [AdminController::class, 'inactiveTeachers']);
 Route::post('/admin/activateTeacher/{user_id}', [AdminController::class, 'activateTeacher']);
+
+// categories managmet routes
+Route::get('/admin/categories', [AdminController::class, 'categories']);
+Route::post('/admin/addCategory', [AdminController::class, 'addCategory']);
+Route::post('/admin/editCategory/{categoryId}', [AdminController::class, 'editCategory']);
+Route::post('/admin/deleteCategory/{user_id}', [AdminController::class, 'deleteCategory']);
 
 
 // teacher routes
