@@ -33,9 +33,13 @@ Route::get('/logout', [AuthController::class, 'logout']);
 
 // admin routes
 Route::get('/admin/dashboard', [BaseController::class, 'dashboard']);
+// users managmet routes
 Route::get('/admin/users', [AdminController::class, 'users']);
 Route::post('/admin/deleteUser/{user_id}', [AdminController::class, 'deleteUser']);
 Route::post('/admin/changeUserStatus/{user_id}', [AdminController::class, 'changeUserStatus']);
+
+// inactive teachers managemt routes
+Route::get('/admin/inactiveTeachers', [AdminController::class, 'inactiveTeachers']);
 
 
 // teacher routes
