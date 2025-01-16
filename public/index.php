@@ -40,6 +40,7 @@ Route::post('/admin/changeUserStatus/{user_id}', [AdminController::class, 'chang
 
 // inactive teachers managemt routes
 Route::get('/admin/inactiveTeachers', [AdminController::class, 'inactiveTeachers']);
+Route::post('/admin/activateTeacher/{user_id}', [AdminController::class, 'activateTeacher']);
 
 
 // teacher routes
