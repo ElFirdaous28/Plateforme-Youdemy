@@ -48,13 +48,13 @@ class Category extends Db
 
     // method to delete a user
     public function deleteCategory($categoryId)
-{
-    try {
-        $deleteCategory = $this->conn->prepare("DELETE FROM categories WHERE category_id = :category_id");
-        $deleteCategory->bindParam(':category_id', $categoryId, PDO::PARAM_INT);
-        $deleteCategory->execute();
-    } catch (PDOException $e) {
-        error_log("Error deleting category: " . $e->getMessage());
+    {
+        try {
+            $deleteCategory = $this->conn->prepare("DELETE FROM categories WHERE category_id = :category_id");
+            $deleteCategory->bindParam(':category_id', $categoryId, PDO::PARAM_INT);
+            $deleteCategory->execute();
+        } catch (PDOException $e) {
+            error_log("Error deleting category: " . $e->getMessage());
+        }
     }
-}
 }

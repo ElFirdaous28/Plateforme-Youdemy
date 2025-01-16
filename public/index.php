@@ -51,6 +51,13 @@ Route::post('/admin/addCategory', [AdminController::class, 'addCategory']);
 Route::post('/admin/editCategory/{categoryId}', [AdminController::class, 'editCategory']);
 Route::post('/admin/deleteCategory/{user_id}', [AdminController::class, 'deleteCategory']);
 
+// tags managment routes
+Route::get('/admin/tags', [AdminController::class, 'tags']);
+Route::post('/admin/addTag', [AdminController::class, 'addTag']);
+Route::post('/admin/editTag/{tagId}', [AdminController::class, 'editTag']);
+Route::post('/admin/deleteTag/{tag_id}', [AdminController::class, 'deleteTag']);
+
+
 
 // teacher routes
 Route::get('/teacher/dashboard', [BaseController::class, 'dashboard']);

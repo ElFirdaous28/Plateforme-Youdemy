@@ -36,7 +36,7 @@
             </li>
 
             <li>
-                <a href="#" class="flex items-center h-12 text-gray-500 hover:text-gray-800">
+                <a href="/admin/tags" class="flex items-center h-12 text-gray-500 hover:text-gray-800">
                     <i class="bx bx-tag text-lg text-gray-400 w-12"></i>
                     <span class="text-sm font-medium">Tags</span>
                 </a>
