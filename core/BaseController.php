@@ -35,17 +35,18 @@ class BaseController
         $url = $_SERVER['REQUEST_URI'];
         $parts = explode('/', trim($url, '/'));
         $urlRole = $parts[0] ?? '';
-    
-        // Check if the session role exists and matches one of the allowed roles
-        if (isset($_SESSION['user_loged_in_role']) && in_array($urlRole, ['admin', 'teacher', 'student'])) {
+
+        if (isset($_SESSION['user_loged_in_role'])) {
             $sessionRole = $_SESSION['user_loged_in_role'];
-    
-            // If the session role doesn't match the URL role, redirect to unauthorized
-            if ($sessionRole !== $urlRole) {
-                header("Location: /unauthorized");
-                exit;
+            if (in_array($urlRole, ['admin', 'teacher', 'student'])) {
+
+                if ($sessionRole !== $urlRole) {
+                    header("Location: /unauthorized");
+                    exit;
+                }
+            } else if ($urlRole === "login") {
+                header("Location: $sessionRole/dashboard");
             }
         }
     }
-    
 }

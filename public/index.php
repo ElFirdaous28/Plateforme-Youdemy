@@ -1,5 +1,6 @@
 <?php
 session_start();
+require_once __DIR__ . '/../vendor/autoload.php';
 
 require_once ('../core/BaseController.php');
 require_once '../core/Router.php';
@@ -17,7 +18,6 @@ $baseController= new BaseController();
 $baseController->checkRole();
 
 
-
 // Define routes
 
 // auth routes 
@@ -31,9 +31,18 @@ Route::post('/handleLogin', [AuthController::class, 'handleLogin']);
 Route::get('/logout', [AuthController::class, 'logout']);
 
 
-// dashboard routes
+// admin routes
 Route::get('/admin/dashboard', [BaseController::class, 'dashboard']);
+Route::get('/admin/users', [AdminController::class, 'users']);
+Route::post('/admin/deleteUser/{user_id}', [AdminController::class, 'deleteUser']);
+Route::post('/admin/changeUserStatus/{user_id}', [AdminController::class, 'changeUserStatus']);
+
+
+// teacher routes
 Route::get('/teacher/dashboard', [BaseController::class, 'dashboard']);
+
+
+// student routes
 Route::get('/student/dashboard', [BaseController::class, 'dashboard']);
 
 // Dispatch the request

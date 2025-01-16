@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css" />
     <script src="https://cdn.tailwindcss.com"></script>
 
-    <title>Responsive Layout</title>
+    <title>Youdemy Platform</title>
 </head>
 
 <body>
