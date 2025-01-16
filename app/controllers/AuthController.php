@@ -24,7 +24,7 @@ class AuthController extends BaseController
     public function handleRegister()
     {
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            $number_of_users=$this->UserModel->getNumberOfUsers();
+            $number_of_users = $this->UserModel->getNumberOfUsers();
 
             if (isset($_POST['register'])) {
                 $full_name = $_POST['full_name'];
@@ -33,13 +33,14 @@ class AuthController extends BaseController
                 $hashed_password = password_hash($password, PASSWORD_DEFAULT);
                 // status has also to take a value!!!
 
-                $role =$number_of_users == 0 ? "admin": $_POST['role'];
+                $role = $number_of_users == 0 ? "admin" : $_POST['role'];
 
                 $user = [$full_name, $email, $hashed_password, $role];
 
                 $lastInsertId = $this->UserModel->register($user);
                 $_SESSION['user_loged_in_id'] = $lastInsertId;
                 $_SESSION['user_loged_in_role'] = $role;
+                $_SESSION['user_loged_in_name'] = $full_name;
 
                 if ($lastInsertId && $role == "admin") {
                     header('Location: /admin/dashboard');
@@ -61,9 +62,9 @@ class AuthController extends BaseController
                 $userData = [$email, $password];
                 $user = $this->UserModel->login($userData);
                 $role = $user['role'];
-                $_SESSION['user_loged_in_id'] = $user["id_utilisateur"];
+                $_SESSION['user_loged_in_id'] = $user["user_id"];
                 $_SESSION['user_loged_in_role'] = $role;
-                $_SESSION['user_loged_in_nome'] = $user['nom_utilisateur'];
+                $_SESSION['user_loged_in_name'] = $user['full_name'];
 
                 if ($user && $role == "admin") {
                     header('Location: /admin/dashboard');
@@ -76,20 +77,15 @@ class AuthController extends BaseController
         }
     }
 
-    // public function logout()
-    // {
+    public function logout()
+    {
+        if (isset($_SESSION['user_loged_in_id']) && isset($_SESSION['user_loged_in_role'])) {
+            unset($_SESSION['user_loged_in_id']);
+            unset($_SESSION['user_loged_in_role']);
+            session_destroy();
 
-
-    //     // if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["logout"])) {
-    //     //  var_dump($_SESSION);die();
-    //     if (isset($_SESSION['user_loged_in_id']) && isset($_SESSION['user_loged_in_role'])) {
-    //         unset($_SESSION['user_loged_in_id']);
-    //         unset($_SESSION['user_loged_in_role']);
-    //         session_destroy();
-
-    //         header("Location: /login");
-    //         exit;
-    //     }
-    //     //   }
-    // }
+            header("Location: /");
+            exit;
+        }
+    }
 }
