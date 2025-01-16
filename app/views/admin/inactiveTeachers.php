@@ -49,7 +49,7 @@
                                 <td class="px-4 py-2 text-sm text-gray-600"><?= htmlspecialchars($inactiveTeacher['email']) ?></td>
                                 <td class="px-4 py-2 text-sm text-gray-600"><?= htmlspecialchars($inactiveTeacher['role']) ?></td>
                                 <td class="px-4 py-2 text-sm text-gray-600">
-                                    <form action="/admin/changeUserStatus/<?php echo $inactiveTeacher['user_id']; ?>" method="POST">
+                                    <form action="/admin/activateTeacher/<?php echo $inactiveTeacher['user_id']; ?>" method="POST">
                                         <input type="hidden" name="csrf_token" value="<?php echo $csrf_token; ?>">
                                         <input type="hidden" name="status" value="<?php echo $inactiveTeacher['status']; ?>">
                                         <button type="button" onclick="if (confirm('Are you sure you want to activate this user\'s status?')) { this.form.submit(); }"

@@ -15,15 +15,19 @@ class User extends Db
         $stmt->execute();
         return $stmt->fetch(PDO::FETCH_COLUMN);
     }
-    // // metohode to get user by id
-    // public function getUserById($idUser)
-    // {
-    //     $stmt = $this->conn->prepare("SELECT * FROM utilisateurs WHERE id_utilisateur = ?");
-    //     $stmt->execute([$idUser]);
-    //     $user = $stmt->fetch(PDO::FETCH_ASSOC);
+    // metohode to get user by id
+    public function getUserById($idUser)
+    {
+        try {
+            $stmt = $this->conn->prepare("SELECT * FROM users WHERE user_id = ?");
+            $stmt->execute([$idUser]);
+            $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    //     return $user;
-    // }
+            return $user;
+        } catch (PDOException $e) {
+            error_log("error finding the user " . $e->getMessage());
+        }
+    }
 
     // register method
     public function register($user)
@@ -85,7 +89,7 @@ class User extends Db
     }
 
     // methode to change user status
-    public function setUserStatus($idUser,$newStatus)
+    public function setUserStatus($idUser, $newStatus)
     {
         $changeStatus = $this->conn->prepare("UPDATE users SET status=? WHERE user_id=?");
         $changeStatus->execute([$newStatus, $idUser]);

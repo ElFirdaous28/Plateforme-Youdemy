@@ -1,6 +1,8 @@
 <?php
 
 require_once(__DIR__ . '/../models/User.php');
+
+require_once(__DIR__ . '/../services/sendTeacherActivationEmail.php');
 class AdminController extends BaseController
 {
     private $UserModel;
@@ -24,6 +26,16 @@ class AdminController extends BaseController
         $inactiveTeachers=$this->UserModel->getInactiveTeachers();
         $csrf_token = $_SESSION['csrf_token'];
         $this->render('/admin/inactiveTeachers',["inactiveTeachers"=>$inactiveTeachers,'csrf_token' => $csrf_token]);
+    }
+    public function activateTeacher($user_id){
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            if (isset($_POST['csrf_token']) && $_POST['csrf_token'] === $_SESSION['csrf_token']) {
+                $this->UserModel->setUserStatus($user_id,"active");
+                $user=$this->UserModel->getUserById($user_id);
+                sendTeacherActivationEmail($user["email"], $user["full_name"]);
+                header("Location:/admin/users");
+            }
+        }
     }
 
     // delete a user
