@@ -19,6 +19,13 @@ class AdminController extends BaseController
         $this->render('/admin/users',["users"=>$users,'csrf_token' => $csrf_token]);
     }
 
+    // all users view
+    public function inactiveTeachers(){
+        $inactiveTeachers=$this->UserModel->getInactiveTeachers();
+        $csrf_token = $_SESSION['csrf_token'];
+        $this->render('/admin/inactiveTeachers',["inactiveTeachers"=>$inactiveTeachers,'csrf_token' => $csrf_token]);
+    }
+
     // delete a user
     public function deleteUSer($user_id){
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {

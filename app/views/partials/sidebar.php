@@ -43,7 +43,7 @@
             </li>
 
             <li>
-                <a href="#" class="flex items-center h-12 text-gray-500 hover:text-gray-800">
+                <a href="/admin/inactiveTeachers" class="flex items-center h-12 text-gray-500 hover:text-gray-800">
                     <i class="bx bx-briefcase text-lg text-gray-400 w-12"></i> <!-- Briefcase Icon for Teachers -->
                     <span class="text-sm font-medium">Inactive Teachers</span>
                 </a>

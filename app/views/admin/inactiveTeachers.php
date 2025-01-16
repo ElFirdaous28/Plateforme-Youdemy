@@ -18,24 +18,7 @@
             <?php include(__DIR__ . '/../partials/sidebar.php'); ?>
             <!-- Main -->
             <main class="flex-1 bg-gray-100 min-h-screen overflow-y-auto pt-24 px-20">
-                <h1 class="text-xl font-bold text-gray-700 my-10">Users</h1>
-                <!-- fiter and search -->
-                <div class="flex items-center justify-between space-x-4 bg-white p-4 px-8 rounded-lg shadow-md">
-                    <!-- Search Bar -->
-                    <div class="flex items-center bg-gray-100 border border-gray-300 rounded px-3 w-3/4">
-                        <i class="bx bx-search text-gray-400 text-lg"></i>
-                        <input
-                            type="text"
-                            placeholder="Search..."
-                            class="w-full bg-transparent border-none outline-none py-2 px-2 text-gray-800" />
-                    </div>
-                    <!-- User Role Dropdown -->
-                    <select class="bg-gray-100 border border-gray-300 text-gray-800 py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 w-1/5">
-                        <option value="teachers">All</option>
-                        <option value="teachers">Teachers</option>
-                        <option value="students">Students</option>
-                    </select>
-                </div>
+                <h1 class="text-xl font-bold text-gray-700 my-10">Inactive Teachers</h1>
 
                 <!-- users table -->
                 <table class="min-w-full table-auto bg-white border border-gray-300 rounded-lg shadow-md mt-10">
@@ -48,14 +31,13 @@
                             <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">Status</th>
                             <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">Created At</th>
                             <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700"></th>
-                            <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700"></th>
                         </tr>
                     </thead>
                     <tbody>
-                        <?php foreach ($users as $user): ?>
+                        <?php foreach ($inactiveTeachers as $inactiveTeacher): ?>
                             <tr class="border-b border-gray-200 hover:bg-gray-50">
                                 <td class="px-8 py-2">
-                                    <?php if ($user['profile_picture']): ?>
+                                    <?php if ($inactiveTeacher['profile_picture']): ?>
                                         <img src="/assets/usersPics/5.jpg" alt="Profile Picture" class="w-14 h-14 rounded-full object-cover">
                                     <?php else: ?>
                                         <div class="w-14 h-14 flex items-center justify-center bg-gray-200 text-gray-500 text-xs rounded-full">
@@ -63,23 +45,23 @@
                                         </div>
                                     <?php endif; ?>
                                 </td>
-                                <td class="px-4 py-2 text-sm text-gray-600"><?= htmlspecialchars($user['full_name']) ?></td>
-                                <td class="px-4 py-2 text-sm text-gray-600"><?= htmlspecialchars($user['email']) ?></td>
-                                <td class="px-4 py-2 text-sm text-gray-600"><?= htmlspecialchars($user['role']) ?></td>
+                                <td class="px-4 py-2 text-sm text-gray-600"><?= htmlspecialchars($inactiveTeacher['full_name']) ?></td>
+                                <td class="px-4 py-2 text-sm text-gray-600"><?= htmlspecialchars($inactiveTeacher['email']) ?></td>
+                                <td class="px-4 py-2 text-sm text-gray-600"><?= htmlspecialchars($inactiveTeacher['role']) ?></td>
                                 <td class="px-4 py-2 text-sm text-gray-600">
-                                    <form action="/admin/changeUserStatus/<?php echo $user['user_id']; ?>" method="POST">
+                                    <form action="/admin/changeUserStatus/<?php echo $inactiveTeacher['user_id']; ?>" method="POST">
                                         <input type="hidden" name="csrf_token" value="<?php echo $csrf_token; ?>">
-                                        <input type="hidden" name="status" value="<?php echo $user['status']; ?>">
-                                        <button type="button" onclick="if (confirm('Are you sure you want to achnge this user\'s status?')) { this.form.submit(); }"
-                                            class="inline-block py-1 px-2 text-xs font-semibold <?= $user['status'] === 'active' ? 'text-green-800 bg-green-100' : 'text-yellow-800 bg-yellow-100' ?> rounded-full">
-                                            <?= htmlspecialchars($user['status']) ?>
+                                        <input type="hidden" name="status" value="<?php echo $inactiveTeacher['status']; ?>">
+                                        <button type="button" onclick="if (confirm('Are you sure you want to activate this user\'s status?')) { this.form.submit(); }"
+                                                class="inline-block py-1 px-2 text-xs font-semibold <?= $inactiveTeacher['status'] === 'active' ? 'text-green-800 bg-green-100' : 'text-yellow-800 bg-yellow-100' ?> rounded-full">
+                                            <?= htmlspecialchars($inactiveTeacher['status']) ?>
                                         </button>
                                     </form>
 
                                 </td>
-                                <td class="px-4 py-2 text-sm text-gray-600"><?= htmlspecialchars($user['created_at']) ?></td>
+                                <td class="px-4 py-2 text-sm text-gray-600"><?= htmlspecialchars($inactiveTeacher['created_at']) ?></td>
                                 <td class="px-4 py-2 text-sm text-gray-600">
-                                    <form action="/admin/deleteUser/<?php echo $user['user_id']; ?>" method="POST">
+                                    <form action="/admin/deleteUser/<?php echo $inactiveTeacher['user_id']; ?>" method="POST">
                                         <input type="hidden" name="csrf_token" value="<?php echo $csrf_token; ?>">
                                         <button type="button" onclick="if (confirm('Are you sure you want to delete this user?')) { this.form.submit(); }" class="text-[#2E5077] hover:underline">Delete</button>
                                     </form>
