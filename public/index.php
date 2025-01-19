@@ -23,10 +23,11 @@ if (!isset($_SESSION['csrf_token'])) {
 
 // Define routes
 
-// auth routes 
 Route::get('/', [BaseController::class, 'index']);
 Route::get('/unauthorized', [BaseController::class, 'unauthorized']);
 
+// auth routes
+// =========================================================================================================================================== 
 Route::get('/register', [AuthController::class, 'showRegister']);
 Route::post('/handleRegister', [AuthController::class, 'handleRegister']);
 Route::get('/login', [AuthController::class, 'showleLogin']);
@@ -35,6 +36,7 @@ Route::get('/logout', [AuthController::class, 'logout']);
 
 
 // admin routes
+// =========================================================================================================================================== 
 Route::get('/admin/dashboard', [BaseController::class, 'dashboard']);
 // users managmet routes
 Route::get('/admin/users', [AdminController::class, 'users']);
@@ -58,11 +60,18 @@ Route::post('/admin/editTag/{tagId}', [AdminController::class, 'editTag']);
 Route::post('/admin/deleteTag/{tag_id}', [AdminController::class, 'deleteTag']);
 
 
+
+
 // teacher routes
+// =========================================================================================================================================== 
 Route::get('/teacher/dashboard', [BaseController::class, 'dashboard']);
+Route::get('/teacher/addCourse', [TeacherController::class, 'addCourseView']);
+
+
 
 
 // student routes
+// =========================================================================================================================================== 
 Route::get('/student/dashboard', [BaseController::class, 'dashboard']);
 
 // Dispatch the request
