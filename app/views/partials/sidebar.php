@@ -56,6 +56,13 @@
                     <span class="text-sm font-medium">Add Course</span>
                 </a>
             </li>
+
+            <li>
+                <a href="/teacher/myCourses" class="flex items-center h-12 text-gray-500 hover:text-gray-800">
+                    <i class="bx bx-briefcase text-lg text-gray-400 w-12"></i> <!-- Briefcase Icon for Teachers -->
+                    <span class="text-sm font-medium">My Courses</span>
+                </a>
+            </li>
         <?php else: ?>
         <?php endif ?>
 

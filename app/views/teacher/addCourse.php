@@ -43,7 +43,7 @@
                 <h1 class="text-xl font-bold text-gray-700 my-10">Add Course</h1>
 
                 <!-- Buttons to select course type -->
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div id="buttons_box" class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <!-- Add Video Course Box -->
                     <button id="btn-video" class="relative group bg-gray-200 p-10 rounded-lg shadow-md hover:shadow-lg hover:bg-gray-300">
                         <div class="absolute inset-0 bg-[url('https://cdn-icons-png.flaticon.com/512/7359/7359402.png')] bg-no-repeat bg-right-bottom bg-contain opacity-10"></div>
@@ -104,6 +104,7 @@
             fileInput.accept = accept;
             contentType.value = contentTypeValue;
             courseForm.classList.remove('hidden'); // Show the form
+            document.getElementById("buttons_box").classList.add("hidden");
         };
 
         btnVideo.addEventListener('click', () => {
