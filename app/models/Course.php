@@ -29,7 +29,8 @@ class Course extends Db
     }
 
     // methode to get all courses
-    public function getAllCourses(){
+    public function getAllCourses()
+    {
         try {
             $stmt = $this->conn->prepare("SELECT * FROM courses");
             $stmt->execute();
@@ -40,10 +41,13 @@ class Course extends Db
     }
 
     // methode to get all teacher courses
-    public function getAllTeacherCourses($teacher_id){
+    public function getAllTeacherCourses($teacher_id)
+    {
         try {
-            $stmt = $this->conn->prepare("SELECT * FROM courses WHERE teacher_id = :teacher_id");
-            $stmt->bindParam(':teacher_id',$teacher_id);
+            $stmt = $this->conn->prepare("SELECT c.*,cat.category_name FROM courses c
+                                          JOIN categories cat ON cat.category_id = c.category_id
+                                          WHERE teacher_id = :teacher_id");
+            $stmt->bindParam(':teacher_id', $teacher_id);
             $stmt->execute();
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
