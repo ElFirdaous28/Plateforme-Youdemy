@@ -46,7 +46,7 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <!-- Add Video Course Box -->
                     <button id="btn-video" class="relative group bg-gray-200 p-10 rounded-lg shadow-md hover:shadow-lg hover:bg-gray-300">
-                        <div class="absolute inset-0 bg-[url('https://cdn-icons-png.flaticon.com/512/3022/3022931.png')] bg-no-repeat bg-right-bottom bg-contain opacity-10"></div>
+                        <div class="absolute inset-0 bg-[url('https://cdn-icons-png.flaticon.com/512/7359/7359402.png')] bg-no-repeat bg-right-bottom bg-contain opacity-10"></div>
                         <div class="flex flex-col items-start space-y-4">
                             <i class="bx bx-video-plus text-5xl text-gray-700"></i>
                             <span class="text-xl font-bold text-gray-700">Add Video Course</span>
@@ -55,7 +55,7 @@
 
                     <!-- Add Document Course Box -->
                     <button id="btn-document" class="relative group bg-gray-200 p-10 rounded-lg shadow-md hover:shadow-lg hover:bg-gray-300">
-                        <div class="absolute inset-0 bg-[url('https://cdn-icons-png.flaticon.com/512/3022/3022931.png')] bg-no-repeat bg-right-bottom bg-contain opacity-10"></div>
+                        <div class="absolute inset-0 bg-[url('https://cdn-icons-png.flaticon.com/512/2704/2704034.png')] bg-no-repeat bg-right-bottom bg-contain opacity-10"></div>
                         <div class="flex flex-col items-start space-y-4">
                             <i class="bx bx-file-plus text-5xl text-gray-700"></i>
                             <span class="text-xl font-bold text-gray-700">Add Document Course</span>
@@ -63,41 +63,27 @@
                     </button>
                 </div>
 
-
-                <!-- Forms -->
                 <div class="mt-10">
-                    <!-- Video Course Form -->
-                    <form id="form-video" action="addvideocourse" method="POST" enctype="multipart/form-data" class="bg-white p-6 pb-12 rounded-md shadow-md hidden">
-                        <h2 class="text-lg font-bold mb-4">Video Course Details</h2>
-                        <?php include(__DIR__ . '/../partials/courseFormDetails.php.php'); ?>
+                    <!-- Single Course Form -->
+                    <form id="course-form" action="/teacher/SubmitAddCourse" method="POST" enctype="multipart/form-data" class="bg-white p-6 pb-12 rounded-md shadow-md hidden">
+                        <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrf_token); ?>">
+                        <h2 id="form-title" class="text-lg font-bold mb-4">Course Details</h2>
+                        <?php include(__DIR__ . '/../partials/courseFormDetails.php'); ?>
 
-                        <!-- video upload input -->
-                        <div class="mb-4">
-                            <label for="video_file" class="block text-gray-700">Upload Video</label>
-                            <input id="video_file" name="video_file" type="file" class="w-full mt-1 p-2 border rounded-md" accept="video/*" required onchange="validateVideoFile(event)">
+                        <!-- File upload section -->
+                        <div class="mb-4" id="file-upload-section">
+                            <label id="file-label" for="file-input" class="block text-gray-700">Upload File</label>
+                            <input id="file-input" name="content" type="file" class="w-full mt-1 p-2 border rounded-md" required>
                         </div>
 
+                        <input id="content-type" type="hidden" name="content_type" value="video">
                         <button type="submit" class="float-right px-4 py-2 text-sm font-bold text-white bg-[#2E5077] border-2 border-[#2E5077] rounded transition hover:bg-transparent hover:text-[#2E5077]">
-                            Submit Video Course
+                            Submit Course
                         </button>
                     </form>
 
-                    <!-- Document Course Form -->
-                    <form id="form-document" action="adddocumentcourse" method="POST" enctype="multipart/form-data" class="bg-white p-6 pb-12 rounded-md shadow-md hidden">
-                        <h2 class="text-lg font-bold mb-4">Document Course Details</h2>
-                        <?php include(__DIR__ . '/../partials/courseFormDetails.php.php'); ?>
-
-                        <!-- Document upload input -->
-                        <div class="mb-4">
-                            <label for="doc-file" class="block text-gray-700">Upload Document</label>
-                            <input id="doc-file" name="document" type="file" class="w-full mt-1 p-2 border rounded-md" accept=".pdf,.doc,.docx" required onchange="validateDocumentFile(event)">
-                        </div>
-
-                        <button type="submit" class="float-right px-4 py-2 text-sm font-bold text-white bg-[#2E5077] border-2 border-[#2E5077] rounded transition hover:bg-transparent hover:text-[#2E5077]">
-                            Submit Document Course
-                        </button>
-                    </form>
                 </div>
+
             </main>
         </div>
     </div>
@@ -105,17 +91,27 @@
     <script>
         const btnVideo = document.getElementById('btn-video');
         const btnDocument = document.getElementById('btn-document');
-        const formVideo = document.getElementById('form-video');
-        const formDocument = document.getElementById('form-document');
+        const courseForm = document.getElementById('course-form');
+        const formTitle = document.getElementById('form-title');
+        const fileLabel = document.getElementById('file-label');
+        const fileInput = document.getElementById('file-input');
+        const contentType = document.getElementById('content-type');
+
+        // Function to show the form and update its content
+        const showForm = (title, label, accept, contentTypeValue) => {
+            formTitle.textContent = title;
+            fileLabel.textContent = label;
+            fileInput.accept = accept;
+            contentType.value = contentTypeValue;
+            courseForm.classList.remove('hidden'); // Show the form
+        };
 
         btnVideo.addEventListener('click', () => {
-            formVideo.classList.remove('hidden');
-            formDocument.classList.add('hidden');
+            showForm("Video Course Details", "Upload Video", "video/*", "video");
         });
 
         btnDocument.addEventListener('click', () => {
-            formDocument.classList.remove('hidden');
-            formVideo.classList.add('hidden');
+            showForm("Document Course Details", "Upload Document", ".pdf,.doc,.docx", "document");
         });
     </script>
 
