@@ -16,10 +16,6 @@ class AdminController extends BaseController
         $this->CategoryModel = new Category();
         $this->TagModel = new Tag();
     }
-    public function dashboard()
-    {
-        $this->render('/admin/dashboard');
-    }
 
     // all users view
     public function users()

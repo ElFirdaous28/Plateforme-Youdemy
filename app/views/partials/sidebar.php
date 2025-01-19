@@ -13,7 +13,7 @@
         </li>
         <!-- admin links -->
         <?php if ($_SESSION['user_loged_in_role'] === "admin"): ?>
-            
+
             <li>
                 <a href="/admin/users" class="flex items-center h-12 text-gray-500 hover:text-gray-800">
                     <i class="bx bx-user text-lg text-gray-400 w-12"></i>
@@ -50,7 +50,12 @@
             </li>
             <!-- teacher links -->
         <?php elseif ($_SESSION['user_loged_in_role'] === "teacher"): ?>
-            <!-- student links -->
+            <li>
+                <a href="/teacher/addCourse" class="flex items-center h-12 text-gray-500 hover:text-gray-800">
+                    <i class="bx bx-briefcase text-lg text-gray-400 w-12"></i> <!-- Briefcase Icon for Teachers -->
+                    <span class="text-sm font-medium">Add Course</span>
+                </a>
+            </li>
         <?php else: ?>
         <?php endif ?>
 
