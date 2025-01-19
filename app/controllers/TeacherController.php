@@ -121,9 +121,36 @@ class TeacherController extends BaseController
         foreach ($courses as &$course) {
             $course['tags'] = $this->CourseTagsModel->getCoursetags($course['course_id']);
         }
-        // echo '<pre>';
-        // var_dump($courses[0]);
-        // die();
-        $this->render('/teacher/myCourses', ['courses' => $courses]);
+        $this->render('/teacher/myCourses', ['courses' => $courses, 'csrf_token' => $_SESSION['csrf_token']]);
+    }
+
+    // method to delete a course
+    public function deletCourse($courseId)
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            if (isset($_POST['csrf_token']) && $_POST['csrf_token'] === $_SESSION['csrf_token']) {
+                $this->CourseModel->deleteCourse($courseId);
+                header("Location:/teacher/myCourses");
+            }
+        }
+    }
+
+    // method to show the course details
+    public function editeCourse($course_id)
+    {
+        $course = $this->CourseModel->getCourseById($course_id);
+        // get tags
+        $course['tags'] = $this->CourseTagsModel->getCoursetags($course['course_id']);
+        // get content
+        if($course['content_type']==='document'){
+            $course['content'] = $this->DocumentContentModel->getContent($course_id);
+        }
+        else if($course['content_type']==='video'){
+            $course['content'] = $this->VideoContentModel->getContent($course_id);
+        }
+
+        $categories = $this->CategoryModel->getAllCategories();
+        $tags = $this->TagModel->getAllTags();
+        $this->render('/teacher/editeCourse', ['course' => $course,'categories' => $categories, 'tags' => $tags, 'csrf_token' => $_SESSION['csrf_token']]);
     }
 }

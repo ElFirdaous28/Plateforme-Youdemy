@@ -18,6 +18,8 @@
             <?php include(__DIR__ . '/../partials/sidebar.php'); ?>
             <!-- Main -->
             <main class="flex-1 bg-gray-100 min-h-screen overflow-y-auto py-24 px-20">
+                <a href="/teacher/addCourse" class="px-4 py-2 text-sm font-bold text-white bg-[#2E5077] border-2 border-[#2E5077] rounded transition hover:bg-transparent hover:text-[#2E5077] float-right">Add Course</a>
+
                 <h1 class="text-xl font-bold text-gray-700 my-10">Add Course</h1>
 
                 <table class="min-w-full table-auto bg-white border border-gray-300 rounded-lg shadow-md mt-10">
@@ -45,16 +47,12 @@
                                 <!-- actions td -->
                                 <td class="px-4 py-2 text-sm text-gray-600">
                                     <!-- Edit Icon -->
-                                    <a href="/edit/<?= $course['course_id'] ?>" class="text-[#2E5077] hover:text-[#3b82f6]">
+                                    <a href="/teacher/editeCourse/<?= $course['course_id'] ?>" class="text-[#2E5077] hover:text-[#3b82f6]">
                                         <i class="bx bx-edit text-xl"></i>
                                     </a>
-                                    <!-- View Icon -->
-                                    <a href="/view/<?= $course['course_id'] ?>" class="ml-4 text-[#2E5077] hover:text-[#3b82f6]">
-                                        <i class="bx bx-show text-xl"></i>
-                                    </a>
                                     <!-- Delete Icon -->
-                                    <form action="/delete/<?= $course['course_id'] ?>" method="POST" class="inline ml-4">
-                                        <input type="hidden" name="csrf_token" value="<?= $csrf_token ?>">
+                                    <form action="/teacher/deletCourse/<?= $course['course_id'] ?>" method="POST" class="inline ml-4">
+                                        <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrf_token) ?>">
                                         <button type="button" onclick="if (confirm('Are you sure you want to delete this course?')) { this.form.submit(); }" class="text-[#2E5077] hover:text-[#3b82f6]">
                                             <i class="bx bx-trash text-xl"></i>
                                         </button>

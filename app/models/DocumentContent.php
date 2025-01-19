@@ -8,7 +8,8 @@ class DocumentContent extends Content
         parent::__construct();
     }
 
-    public function addContent($contentData){
+    public function addContent($contentData)
+    {
         try {
             $stmt = $this->conn->prepare("INSERT INTO document_content (course_id,document_url,pages_number)
                                           VALUES (:course_id, :document_url, :pages_number)");
@@ -23,5 +24,17 @@ class DocumentContent extends Content
             return false;
         }
     }
-    public function getContent($contentId){}
+    public function getContent($course_id)
+    {
+        try {
+            $stmt = $this->conn->prepare("SELECT * FROM document_content WHERE course_id = :course_id");
+            $stmt->bindParam(':course_id', $course_id);
+
+            $stmt->execute();
+            return $stmt->fetch(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            error_log("Error getting video content: " . $e->getMessage());
+            return false;
+        }
+    }
 }

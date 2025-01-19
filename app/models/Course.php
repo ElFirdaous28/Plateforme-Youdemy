@@ -8,7 +8,7 @@ class Course extends Db
         parent::__construct();
     }
 
-    // methode to add a cousre
+    // method to add a cousre
     public function createCoure($title, $description, $category_id, $teacher_id, $content_type)
     {
         try {
@@ -28,7 +28,7 @@ class Course extends Db
         }
     }
 
-    // methode to get all courses
+    // method to get all courses
     public function getAllCourses()
     {
         try {
@@ -40,7 +40,20 @@ class Course extends Db
         }
     }
 
-    // methode to get all teacher courses
+    // method to get course by id
+    public function getCourseById($course_id)
+    {
+        try {
+            $stmt = $this->conn->prepare("SELECT * FROM courses WHERE course_id = :course_id");
+            $stmt->bindParam(':course_id',$course_id);
+            $stmt->execute();
+            return $stmt->fetch(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            echo "Error: " . $e->getMessage();
+        }
+    }
+
+    // method to get all teacher courses
     public function getAllTeacherCourses($teacher_id)
     {
         try {
@@ -54,4 +67,16 @@ class Course extends Db
             echo "Error: " . $e->getMessage();
         }
     }
+
+     // method to delete a Course
+     public function deleteCourse($courseId)
+     {
+         try {
+             $deleteCourse = $this->conn->prepare("DELETE FROM courses WHERE course_id = :course_id");
+             $deleteCourse->bindParam(':course_id', $courseId, PDO::PARAM_INT);
+             $deleteCourse->execute();
+         } catch (PDOException $e) {
+             error_log("Error deleting Course: " . $e->getMessage());
+         }
+     }
 }

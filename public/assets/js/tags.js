@@ -26,13 +26,17 @@ function dropdown() {
         loadOptions() {
             const options = document.getElementById('tags_select').options;
             for (let i = 0; i < options.length; i++) {
+                const isSelected = options[i].hasAttribute('selected');
                 this.options.push({
                     value: options[i].value,
                     text: options[i].innerText,
-                    selected: options[i].getAttribute('selected') != null ? options[i].getAttribute('selected') : false
+                    selected: isSelected
                 });
+                if (isSelected) {
+                    this.selected.push(i); // Add preselected options to the selected array
+                }
             }
-        },
+        },        
         selectedValues() {
             return this.selected.map((option) => {
                 return this.options[option].value;
