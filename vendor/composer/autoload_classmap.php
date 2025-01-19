@@ -11,6 +11,7 @@ return array(
     'AVCSequenceParameterSetReader' => $vendorDir . '/james-heinrich/getid3/getid3/module.audio-video.flv.php',
     'Composer\\InstalledVersions' => $vendorDir . '/composer/InstalledVersions.php',
     'Datamatrix' => $vendorDir . '/tecnickcom/tcpdf/include/barcodes/datamatrix.php',
+    'FPDF' => $vendorDir . '/setasign/fpdf/fpdf.php',
     'Image_XMP' => $vendorDir . '/james-heinrich/getid3/getid3/module.tag.xmp.php',
     'PDF417' => $vendorDir . '/tecnickcom/tcpdf/include/barcodes/pdf417.php',
     'QRcode' => $vendorDir . '/tecnickcom/tcpdf/include/barcodes/qrcode.php',

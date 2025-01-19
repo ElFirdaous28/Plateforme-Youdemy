@@ -15,10 +15,6 @@ class ComposerStaticInitee25872269cbc096436c81a2cb6bdcd5
         array (
             'PHPMailer\\PHPMailer\\' => 20,
         ),
-        'F' => 
-        array (
-            'Fpdf\\' => 5,
-        ),
     );
 
     public static $prefixDirsPsr4 = array (
@@ -30,10 +26,6 @@ class ComposerStaticInitee25872269cbc096436c81a2cb6bdcd5
         array (
             0 => __DIR__ . '/..' . '/phpmailer/phpmailer/src',
         ),
-        'Fpdf\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/fpdf/fpdf/src/Fpdf',
-        ),
     );
 
     public static $classMap = array (
@@ -42,6 +34,7 @@ class ComposerStaticInitee25872269cbc096436c81a2cb6bdcd5
         'AVCSequenceParameterSetReader' => __DIR__ . '/..' . '/james-heinrich/getid3/getid3/module.audio-video.flv.php',
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
         'Datamatrix' => __DIR__ . '/..' . '/tecnickcom/tcpdf/include/barcodes/datamatrix.php',
+        'FPDF' => __DIR__ . '/..' . '/setasign/fpdf/fpdf.php',
         'Image_XMP' => __DIR__ . '/..' . '/james-heinrich/getid3/getid3/module.tag.xmp.php',
         'PDF417' => __DIR__ . '/..' . '/tecnickcom/tcpdf/include/barcodes/pdf417.php',
         'QRcode' => __DIR__ . '/..' . '/tecnickcom/tcpdf/include/barcodes/qrcode.php',
