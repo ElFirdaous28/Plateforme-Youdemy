@@ -9,7 +9,7 @@
 <!-- Category Select -->
 <div class="mb-4">
     <label for="category_select" class="block text-gray-700">Category</label>
-    <select id="category_select" name="category" class="w-full mt-1 p-2 border rounded-md text-gray-400" required>
+    <select id="category_select" name="category_id" class="w-full mt-1 p-2 border rounded-md text-gray-400" required>
         <option value="" disabled selected>Select a category</option>
         <?php foreach ($categories as $categorie): ?>
             <option value="<?= htmlspecialchars($categorie["category_id"]) ?>"><?= htmlspecialchars($categorie["category_name"]) ?></option>
@@ -28,14 +28,14 @@
     </select>
 
     <div x-data="dropdown()" x-init="loadOptions()" class="flex flex-col items-center">
-        <input name="values" type="hidden" x-bind:value="selectedValues()">
+        <!-- <input name="values" type="hidden" x-bind:value="selectedValues()"> -->
         <div class="relative w-full">
             <div class="flex flex-col items-center relative">
                 <div x-on:click="open" class="w-full">
                     <div class="my-2 p-1 flex border border-gray-200 bg-white rounded">
                         <div class="flex flex-auto flex-wrap">
                             <template x-for="(option,index) in selected" :key="options[option].value">
-                                <div class="flex justify-center items-center m-1 font-medium py-1 px-1 bg-white rounded bg-gray-100 border">
+                                <div class="flex justify-center items-center m-1 font-medium py-1 px-1 rounded bg-gray-100 border">
                                     <div class="text-xs font-normal leading-none max-w-full flex-initial x-model=" options[option] x-text="options[option].text"></div>
                                     <div class="flex flex-auto flex-row-reverse">
                                         <div x-on:click.stop="remove(index,option)">
@@ -47,7 +47,7 @@
                                 </div>
                             </template>
                             <div x-show="selected.length == 0" class="flex-1">
-                                <input placeholder="Select tags" class="bg-transparent p-1 px-2 appearance-none outline-none h-full w-full text-gray-800" x-bind:value="selectedValues()">
+                                <input name="tags" placeholder="Select tags" class="bg-transparent p-1 px-2 appearance-none outline-none h-full w-full text-gray-800" x-bind:value="selectedValues()">
                             </div>
                         </div>
                         <div class="text-gray-300 py-1 pl-2 pr-1 border-l flex items-center border-gray-200 svelte-1l8159u">

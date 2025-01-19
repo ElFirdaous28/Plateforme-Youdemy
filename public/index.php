@@ -17,6 +17,7 @@ Route::setRouter($router);
 $baseController= new BaseController();
 $baseController->checkRole();
 
+// m1
 if (!isset($_SESSION['csrf_token'])) {
     $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
 }
@@ -66,6 +67,7 @@ Route::post('/admin/deleteTag/{tag_id}', [AdminController::class, 'deleteTag']);
 // =========================================================================================================================================== 
 Route::get('/teacher/dashboard', [BaseController::class, 'dashboard']);
 Route::get('/teacher/addCourse', [TeacherController::class, 'addCourseView']);
+Route::post('/teacher/SubmitAddCourse', [TeacherController::class, 'SubmitAddCourse']);
 
 
 

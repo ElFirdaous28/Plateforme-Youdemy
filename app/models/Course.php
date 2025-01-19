@@ -9,15 +9,22 @@ class Course extends Db
     }
 
     // methode to add a cousre
-    public function addCoure($title,$description){
-        try{
-        // INSERT INTO `courses` (`course_id`, `title`, `description`, `content_url`, `category_id`, `teacher_id`, `created_at`, `updated_at`) VALUES (NULL, 'course1', 'descreption of course 1', 'url', '4', '6', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
-            $this->conn->prepare("INSERT INTO courses (title,description,content_url,category_id,teacher_id
-                                  VALUES (:title, :description,:content_url,:category_id,:teacher_id)");
-        }
-        catch(PDOException $e){
-            error_log("error adding a course ".$e->getMessage());
+    public function createCoure($title, $description, $category_id, $teacher_id, $content_type)
+    {
+        try {
+            $stmt = $this->conn->prepare("INSERT INTO courses (title, description, category_id, teacher_id, content_type)
+                                          VALUES (:title, :description, :category_id, :teacher_id, :content_type)");
+            $stmt->bindParam(':title', $title);
+            $stmt->bindParam(':description', $description);
+            $stmt->bindParam(':category_id', $category_id);
+            $stmt->bindParam(':teacher_id', $teacher_id);
+            $stmt->bindParam(':content_type', $content_type);
+
+            $stmt->execute();
+            return $this->conn->lastInsertId();
+        } catch (PDOException $e) {
+            error_log("Error adding course: " . $e->getMessage());
+            throw new Exception("Database error occurred");
         }
     }
 }
-?>
