@@ -69,6 +69,7 @@ class TeacherController extends BaseController
                     } else if ($content_type == 'document') {
                         $this->DocumentContentModel->addContent(['course_id' => $courseInsertedId, 'document_url' => $fileDetails['fileUrl'], 'pages_number' => $fileDetails['contentInfo']]);
                     }
+                    header("Location:/teacher/myCourses");
                 } else {
                     echo 'Failed to add course to the database';
                 }
@@ -116,9 +117,13 @@ class TeacherController extends BaseController
     public function teacherCourses()
     {
         $courses = $this->CourseModel->getAllTeacherCourses($_SESSION['user_loged_in_id']);
-        echo '<pre>';
-        var_dump($courses);
-        die();
-        $this->render('/teacher/addCourse', ['courses' => $courses]);
+        // Add tags to each course
+        foreach ($courses as &$course) {
+            $course['tags'] = $this->CourseTagsModel->getCoursetags($course['course_id']);
+        }
+        // echo '<pre>';
+        // var_dump($courses[0]);
+        // die();
+        $this->render('/teacher/myCourses', ['courses' => $courses]);
     }
 }
