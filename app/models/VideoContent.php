@@ -23,5 +23,16 @@ class VideoContent extends Content
             return false;
         }
     }
-    public function getContent($contentId){}
+    public function getContent($course_id){
+        try {
+            $stmt = $this->conn->prepare("SELECT * FROM video_content WHERE course_id = :course_id");
+            $stmt->bindParam(':course_id', $course_id);
+
+            $stmt->execute();
+            return $stmt->fetch(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            error_log("Error getting video content: " . $e->getMessage());
+            return false;
+        }
+    }
 }

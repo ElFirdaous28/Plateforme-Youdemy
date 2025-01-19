@@ -69,6 +69,8 @@ Route::get('/teacher/dashboard', [BaseController::class, 'dashboard']);
 Route::get('/teacher/addCourse', [TeacherController::class, 'addCourseView']);
 Route::post('/teacher/SubmitAddCourse', [TeacherController::class, 'SubmitAddCourse']);
 Route::get('/teacher/myCourses', [TeacherController::class, 'teacherCourses']);
+Route::post('/teacher/deletCourse/{course_id}', [TeacherController::class, 'deletCourse']);
+Route::get('/teacher/editeCourse/{course_id}', [TeacherController::class, 'editeCourse']);
 
 
 

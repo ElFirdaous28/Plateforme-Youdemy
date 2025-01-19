@@ -8,7 +8,7 @@ class CourseTags extends Db
         parent::__construct();
     }
 
-    // methode to insert courseTags
+    // method to insert courseTags
     public function addCourseTags($course_id,$tag_id){
         try{
             $stmt = $this->conn->prepare("INSERT INTO course_tags (course_id,tag_id)
@@ -23,7 +23,7 @@ class CourseTags extends Db
         }
     }
 
-    // methode to get course tags
+    // method to get course tags
     public function getCoursetags($course_id) {
         try {
             $stmt = $this->conn->prepare("SELECT t.tag_name FROM course_tags ct 
