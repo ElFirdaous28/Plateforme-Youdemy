@@ -26,9 +26,8 @@
             </header>
 
             <!-- Main -->
-            <main class="flex-1 bg-gray-100 min-h-screen overflow-y-auto pt-24 px-20">
-                <h1 class="text-xl font-semibold">Main Content</h1>
-                <p>This is the main content section. It has an overflow so that when the content is too long, it will scroll.</p>
+            <main class="flex-1 bg-gray-100 min-h-screen overflow-y-auto pt-24 mb-20 px-4 sm:px-10 lg:px-20">
+                <?php include(__DIR__ . '/../partials/coursesMian.php'); ?>
             </main>
         </div>
     </div>

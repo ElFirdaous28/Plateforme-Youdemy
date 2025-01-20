@@ -1,4 +1,4 @@
-this is the teacher dashboard<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -12,19 +12,18 @@ this is the teacher dashboard<!DOCTYPE html>
 
 <body>
     <div class="flex">
-        <?php include(__DIR__.'/../partials/header.php');?>
+        <?php include(__DIR__ . '/../partials/header.php'); ?>
         <!-- Main Content -->
         <div class="flex flex-col flex-1 lg:ml-64">
-        <?php include(__DIR__.'/../partials/sidebar.php');?>
+            <?php include(__DIR__ . '/../partials/sidebar.php'); ?>
             <!-- Main -->
             <main class="flex-1 bg-gray-100 min-h-screen overflow-y-auto py-24 px-20">
-            <h1 class="text-xl font-bold text-gray-700 my-10">this is the student main content</h1>
-
-            
+                <?php include(__DIR__ . '/../partials/coursesMian.php'); ?>
             </main>
         </div>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/alpinejs@2.8.2/dist/alpine.min.js" defer></script>    
+
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@2.8.2/dist/alpine.min.js" defer></script>
 </body>
 
 </html>

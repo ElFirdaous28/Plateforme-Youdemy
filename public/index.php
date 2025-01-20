@@ -82,6 +82,7 @@ Route::post('/teacher/SubmitEditCourse/{course_id}', [TeacherController::class, 
 // student routes
 // =========================================================================================================================================== 
 Route::get('/student/dashboard', [BaseController::class, 'dashboard']);
+Route::get('/student/courses', [StudentController::class, 'courses']);
 
 // Dispatch the request
 $router->dispatch($_SERVER['REQUEST_URI'], $_SERVER['REQUEST_METHOD']);
