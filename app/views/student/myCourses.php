@@ -29,7 +29,7 @@
 
                             <div class="p-6 flex flex-col flex-grow space-y-4">
                                 <!-- Title -->
-                                <a href="/course/details/<?= $course['course_id'] ?>" class="text-xl font-semibold text-gray-600 truncate hover:text-[#2E5077]"><?= htmlspecialchars($course['title']) ?></a>
+                                <a href="/student/courseDetails/<?= $course['course_id'] ?>" class="text-xl font-semibold text-gray-600 truncate hover:text-[#2E5077]"><?= htmlspecialchars($course['title']) ?></a>
 
                                 <!-- Description -->
                                 <p class="text-sm text-gray-600 mt-2 truncate"><?= htmlspecialchars($course['description']) ?></p>
