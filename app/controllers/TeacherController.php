@@ -6,6 +6,7 @@ require_once(__DIR__ . '/../models/Course.php');
 require_once(__DIR__ . '/../models/VideoContent.php');
 require_once(__DIR__ . '/../models/DocumentContent.php');
 require_once(__DIR__ . '/../models/CourseTags.php');
+require_once(__DIR__ . '/../models/Enrollment.php');
 
 require_once __DIR__ . '/../../vendor/autoload.php';
 
@@ -20,6 +21,7 @@ class TeacherController extends BaseController
     private $DocumentContentModel;
     private $VideoContentModel;
     private $CourseTagsModel;
+    private $EnrollmentModel;
 
     public function __construct()
     {
@@ -29,6 +31,7 @@ class TeacherController extends BaseController
         $this->DocumentContentModel = new DocumentContent();
         $this->VideoContentModel = new VideoContent();
         $this->CourseTagsModel = new CourseTags();
+        $this->EnrollmentModel = new Enrollment();
     }
 
     // method to show add course view
@@ -200,5 +203,27 @@ class TeacherController extends BaseController
                 }
             }
         }
+    }
+
+    // Method to show all enrollments in a specific course
+    public function classEnrollments($course_id)
+    {
+        $enrollments = $this->EnrollmentModel->getClassEnrollment($course_id) ?? [];
+        $course = $this->CourseModel->getCourseById($course_id);
+    
+        $this->render('/teacher/enrollments', ['enrollments' => $enrollments,'course' => $course,'csrf_token' => $_SESSION['csrf_token']]);
+    }
+
+    public function acceptEnrollment($enrollment_id)
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            if (isset($_POST['csrf_token']) && $_POST['csrf_token'] === $_SESSION['csrf_token']) {
+                $this->EnrollmentModel->setStatus($enrollment_id, 'enrolled');
+            }
+        }
+    
+        // Output JavaScript to go back to the previous page
+        echo "<script>window.history.back();</script>";
+        exit();
     }
 }

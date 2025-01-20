@@ -75,6 +75,9 @@ Route::get('/teacher/myCourses', [TeacherController::class, 'teacherCourses']);
 Route::post('/teacher/deletCourse/{course_id}', [TeacherController::class, 'deletCourse']);
 Route::get('/teacher/editeCourse/{course_id}', [TeacherController::class, 'editeCourse']);
 Route::post('/teacher/SubmitEditCourse/{course_id}', [TeacherController::class, 'SubmitEditCourse']);
+Route::get('/teacher/enrollments/{course_id}', [TeacherController::class, 'classEnrollments']);
+Route::post('/teacher/acceptEnrollment/{enrollment_id}', [TeacherController::class,'acceptEnrollment']);
+
 
 
 
