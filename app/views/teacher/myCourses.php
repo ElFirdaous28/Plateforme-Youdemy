@@ -50,7 +50,7 @@
                                             <i class="bx bx-edit text-xl"></i>
                                         </a>
                                         <!-- View Enrollments Icon -->
-                                        <a href="/teacher/viewEnrollments/<?= $course['course_id'] ?>" class="text-[#2E5077] hover:text-[#3b82f6] ml-4" title="View Enrollments">
+                                        <a href="/teacher/enrollments/<?= $course['course_id'] ?>" class="text-[#2E5077] hover:text-[#3b82f6] ml-4" title="View Enrollments">
                                             <i class="bx bx-group text-xl"></i>
                                         </a>
                                     <?php endif ?>
