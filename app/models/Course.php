@@ -54,7 +54,8 @@ class Course extends Db
     public function getAllCourses()
     {
         try {
-            $stmt = $this->conn->prepare("SELECT * FROM courses");
+            $stmt = $this->conn->prepare("SELECT c.*,cat.category_name FROM courses c
+                                          JOIN categories cat ON cat.category_id = c.category_id");
             $stmt->execute();
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {

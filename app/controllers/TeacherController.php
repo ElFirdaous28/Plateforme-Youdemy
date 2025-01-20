@@ -69,7 +69,7 @@ class TeacherController extends BaseController
                     } else if ($content_type == 'document') {
                         $this->DocumentContentModel->addContent(['course_id' => $courseInsertedId, 'document_url' => $fileDetails['fileUrl'], 'pages_number' => $fileDetails['contentInfo']]);
                     }
-                    // header("Location:/teacher/myCourses");
+                    header("Location:/teacher/myCourses");
                 } else {
                     echo 'Failed to add course to the database';
                 }

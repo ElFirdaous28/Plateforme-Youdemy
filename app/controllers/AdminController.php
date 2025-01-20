@@ -3,6 +3,8 @@
 require_once(__DIR__ . '/../models/User.php');
 require_once(__DIR__ . '/../models/Category.php');
 require_once(__DIR__ . '/../models/Tag.php');
+require_once(__DIR__ . '/../models/Course.php');
+require_once(__DIR__ . '/../models/CourseTags.php');
 
 require_once(__DIR__ . '/../services/sendTeacherActivationEmail.php');
 class AdminController extends BaseController
@@ -10,11 +12,15 @@ class AdminController extends BaseController
     private $UserModel;
     private $CategoryModel;
     private $TagModel;
+    private $CourseModel;
+    private $CourseTagsModel;
     public function __construct()
     {
         $this->UserModel = new User();
         $this->CategoryModel = new Category();
         $this->TagModel = new Tag();
+        $this->CourseModel = new Course();
+        $this->CourseTagsModel = new CourseTags();
     }
 
     // all users view
@@ -149,6 +155,28 @@ class AdminController extends BaseController
             if (isset($_POST['csrf_token']) && $_POST['csrf_token'] === $_SESSION['csrf_token']) {
                 $this->TagModel->deleteTag($tag_id);
                 header("Location:/admin/tags");
+            }
+        }
+    }
+
+    // method to show all courses
+    public function AllCourses()
+    {
+        $courses = $this->CourseModel->getAllCourses();
+        // Add tags to each course
+        foreach ($courses as &$course) {
+            $course['tags'] = $this->CourseTagsModel->getCoursetags($course['course_id']);
+        }
+        $this->render('/teacher/myCourses', ['courses' => $courses, 'csrf_token' => $_SESSION['csrf_token']]);
+    }
+
+    // method to dlete a course
+    public function deletCourse($courseId)
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            if (isset($_POST['csrf_token']) && $_POST['csrf_token'] === $_SESSION['csrf_token']) {
+                $this->CourseModel->deleteCourse($courseId);
+                header("Location:/admin/courses");
             }
         }
     }

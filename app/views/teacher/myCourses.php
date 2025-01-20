@@ -30,7 +30,6 @@
                             <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">Content Type</th>
                             <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">Category</th>
                             <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">Created At</th>
-                            <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">Updated At</th>
                             <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">Actions</th>
                         </tr>
                     </thead>
@@ -42,18 +41,23 @@
                                 <td class="px-4 py-2 text-sm text-gray-600"><?= htmlspecialchars($course['content_type']) ?></td>
                                 <td class="px-4 py-2 text-sm text-gray-600"><?= htmlspecialchars($course['category_name']) ?></td>
                                 <td class="px-4 py-2 text-sm text-gray-600"><?= date('Y-m-d', strtotime($course['created_at'])) ?></td>
-                                <td class="px-4 py-2 text-sm text-gray-600"><?= date('Y-m-d', strtotime($course['updated_at'])) ?></td>
 
                                 <!-- actions td -->
                                 <td class="px-4 py-2 text-sm text-gray-600">
-                                    <!-- Edit Icon -->
-                                    <a href="/teacher/editeCourse/<?= $course['course_id'] ?>" class="text-[#2E5077] hover:text-[#3b82f6]">
-                                        <i class="bx bx-edit text-xl"></i>
-                                    </a>
+                                    <?php if ($_SESSION['user_loged_in_role']==='teacher'): ?>
+                                        <!-- Edit Icon -->
+                                        <a href="/teacher/editeCourse/<?= $course['course_id'] ?>" class="text-[#2E5077] hover:text-[#3b82f6]" title="Edit Course">
+                                            <i class="bx bx-edit text-xl"></i>
+                                        </a>
+                                        <!-- View Enrollments Icon -->
+                                        <a href="/teacher/viewEnrollments/<?= $course['course_id'] ?>" class="text-[#2E5077] hover:text-[#3b82f6] ml-4" title="View Enrollments">
+                                            <i class="bx bx-group text-xl"></i>
+                                        </a>
+                                    <?php endif ?>
                                     <!-- Delete Icon -->
-                                    <form action="/teacher/deletCourse/<?= $course['course_id'] ?>" method="POST" class="inline ml-4">
+                                    <form action="/admin/deletCourse/<?= $course['course_id'] ?>" method="POST" class="inline ml-4">
                                         <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrf_token) ?>">
-                                        <button type="button" onclick="if (confirm('Are you sure you want to delete this course?')) { this.form.submit(); }" class="text-[#2E5077] hover:text-[#3b82f6]">
+                                        <button type="button" onclick="if (confirm('Are you sure you want to delete this course?')) { this.form.submit(); }" class="text-[#2E5077] hover:text-[#3b82f6]" title="Delete Course">
                                             <i class="bx bx-trash text-xl"></i>
                                         </button>
                                     </form>

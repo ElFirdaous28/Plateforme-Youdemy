@@ -60,6 +60,9 @@ Route::post('/admin/addTag', [AdminController::class, 'addTag']);
 Route::post('/admin/editTag/{tagId}', [AdminController::class, 'editTag']);
 Route::post('/admin/deleteTag/{tag_id}', [AdminController::class, 'deleteTag']);
 
+// couese managment
+Route::get('/admin/courses', [AdminController::class, 'AllCourses']);
+Route::post('/admin/deletCourse/{course_id}', [AdminController::class, 'deletCourse']);
 
 
 
