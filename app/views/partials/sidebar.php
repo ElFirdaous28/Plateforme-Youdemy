@@ -64,6 +64,20 @@
                 </a>
             </li>
         <?php else: ?>
+            <!-- student links -->
+            <li>
+                <a href="/student/myCourses" class="flex items-center h-12 text-gray-500 hover:text-gray-800">
+                    <i class="bx bx-briefcase text-lg text-gray-400 w-12"></i> <!-- Briefcase Icon for Teachers -->
+                    <span class="text-sm font-medium">My Courses</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="/student/courses" class="flex items-center h-12 text-gray-500 hover:text-gray-800">
+                    <i class="bx bx-briefcase text-lg text-gray-400 w-12"></i> <!-- Briefcase Icon for Teachers -->
+                    <span class="text-sm font-medium">Courses</span>
+                </a>
+            </li>
         <?php endif ?>
 
     </ul>
