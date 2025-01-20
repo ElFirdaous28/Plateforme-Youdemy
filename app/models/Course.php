@@ -28,6 +28,28 @@ class Course extends Db
         }
     }
 
+    // method to edit a course
+    public function editCourse($course_id, $title, $description, $category_id)
+    {
+        try {
+            $stmt = $this->conn->prepare("UPDATE courses 
+                                          SET title = :title, 
+                                          description = :description, 
+                                          category_id = :category_id
+                                          WHERE course_id = :course_id");
+
+            $stmt->bindParam(':title', $title);
+            $stmt->bindParam(':description', $description);
+            $stmt->bindParam(':category_id', $category_id);
+            $stmt->bindParam(':course_id', $course_id);
+
+            $stmt->execute();
+            return true;
+        } catch (PDOException $e) {
+            error_log("Error editing course: " . $e->getMessage());
+        }
+    }
+
     // method to get all courses
     public function getAllCourses()
     {
@@ -45,7 +67,7 @@ class Course extends Db
     {
         try {
             $stmt = $this->conn->prepare("SELECT * FROM courses WHERE course_id = :course_id");
-            $stmt->bindParam(':course_id',$course_id);
+            $stmt->bindParam(':course_id', $course_id);
             $stmt->execute();
             return $stmt->fetch(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
@@ -68,15 +90,15 @@ class Course extends Db
         }
     }
 
-     // method to delete a Course
-     public function deleteCourse($courseId)
-     {
-         try {
-             $deleteCourse = $this->conn->prepare("DELETE FROM courses WHERE course_id = :course_id");
-             $deleteCourse->bindParam(':course_id', $courseId, PDO::PARAM_INT);
-             $deleteCourse->execute();
-         } catch (PDOException $e) {
-             error_log("Error deleting Course: " . $e->getMessage());
-         }
-     }
+    // method to delete a Course
+    public function deleteCourse($courseId)
+    {
+        try {
+            $deleteCourse = $this->conn->prepare("DELETE FROM courses WHERE course_id = :course_id");
+            $deleteCourse->bindParam(':course_id', $courseId, PDO::PARAM_INT);
+            $deleteCourse->execute();
+        } catch (PDOException $e) {
+            error_log("Error deleting Course: " . $e->getMessage());
+        }
+    }
 }

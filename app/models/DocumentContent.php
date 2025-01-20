@@ -24,6 +24,26 @@ class DocumentContent extends Content
             return false;
         }
     }
+
+    public function editContent($contentData)
+    {
+        try {
+            $stmt = $this->conn->prepare("UPDATE document_content 
+                                          SET document_url = :document_url, 
+                                              pages_number = :pages_number 
+                                          WHERE course_id = :course_id");
+    
+            $stmt->bindParam(':course_id', $contentData['course_id']);
+            $stmt->bindParam(':document_url', $contentData['document_url']);
+            $stmt->bindParam(':pages_number', $contentData['pages_number']);
+    
+            $stmt->execute();
+            return true;
+        } catch (PDOException $e) {
+            error_log("Error updating document content: " . $e->getMessage());
+            return false;
+        }
+    }    
     public function getContent($course_id)
     {
         try {

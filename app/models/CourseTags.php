@@ -9,34 +9,46 @@ class CourseTags extends Db
     }
 
     // method to insert courseTags
-    public function addCourseTags($course_id,$tag_id){
-        try{
+    public function addCourseTags($course_id, $tag_id)
+    {
+        try {
             $stmt = $this->conn->prepare("INSERT INTO course_tags (course_id,tag_id)
                             VALUES (:course_id,:tag_id)");
-            $stmt->bindParam(':course_id',$course_id);
-            $stmt->bindParam(':tag_id',$tag_id);
+            $stmt->bindParam(':course_id', $course_id);
+            $stmt->bindParam(':tag_id', $tag_id);
 
             $stmt->execute();
-        }
-        catch(PDOException $e){
-            error_log("erroe inserting tag: ".$e);
+        } catch (PDOException $e) {
+            error_log("erroe inserting tag: " . $e);
         }
     }
 
     // method to get course tags
-    public function getCoursetags($course_id) {
+    public function getCoursetags($course_id)
+    {
         try {
             $stmt = $this->conn->prepare("SELECT t.tag_name FROM course_tags ct 
                                           JOIN tags t ON t.tag_id = ct.tag_id
                                           WHERE ct.course_id = :course_id;");
             $stmt->bindParam(':course_id', $course_id);
             $stmt->execute();
-            
+
             // Fetch all tag names directly as an indexed array
             return $stmt->fetchAll(PDO::FETCH_COLUMN);
         } catch (PDOException $e) {
             error_log("error getting tags: " . $e);
         }
-    }    
+    }
 
+    // Method to delete course tags
+    public function deleteCourseTags($course_id)
+    {
+        try {
+            $stmt = $this->conn->prepare("DELETE FROM course_tags WHERE course_id = :course_id");
+            $stmt->bindParam(':course_id', $course_id);
+            $stmt->execute();
+        } catch (PDOException $e) {
+            error_log("Error deleting course tags: " . $e->getMessage());
+        }
+    }
 }

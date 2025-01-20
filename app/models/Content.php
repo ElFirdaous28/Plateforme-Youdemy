@@ -9,5 +9,6 @@ abstract class Content extends Db
     }
 
     abstract public function addContent($contentData);
+    abstract public function editContent($contentData);
     abstract public function getContent($contentId);
 }

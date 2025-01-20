@@ -71,6 +71,7 @@ Route::post('/teacher/SubmitAddCourse', [TeacherController::class, 'SubmitAddCou
 Route::get('/teacher/myCourses', [TeacherController::class, 'teacherCourses']);
 Route::post('/teacher/deletCourse/{course_id}', [TeacherController::class, 'deletCourse']);
 Route::get('/teacher/editeCourse/{course_id}', [TeacherController::class, 'editeCourse']);
+Route::post('/teacher/SubmitEditCourse/{course_id}', [TeacherController::class, 'SubmitEditCourse']);
 
 
 
