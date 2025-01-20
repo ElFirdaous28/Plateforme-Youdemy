@@ -69,7 +69,7 @@ class TeacherController extends BaseController
                     } else if ($content_type == 'document') {
                         $this->DocumentContentModel->addContent(['course_id' => $courseInsertedId, 'document_url' => $fileDetails['fileUrl'], 'pages_number' => $fileDetails['contentInfo']]);
                     }
-                    header("Location:/teacher/myCourses");
+                    // header("Location:/teacher/myCourses");
                 } else {
                     echo 'Failed to add course to the database';
                 }
@@ -93,7 +93,7 @@ class TeacherController extends BaseController
                 if ($content_type === 'video') {
                     $getID3 = new \getID3;
                     $file = $getID3->analyze($targetFilePath);
-                    $contentInfo = $file['playtime_string'] ?? 'Unknown duration';
+                    $contentInfo = isset($file['playtime_seconds']) ? (int) $file['playtime_seconds'] : 0;
                 } elseif ($content_type === 'document') {
                     // Use FPDI to extract PDF page count
                     $pdf = new Fpdi();
@@ -142,15 +142,63 @@ class TeacherController extends BaseController
         // get tags
         $course['tags'] = $this->CourseTagsModel->getCoursetags($course['course_id']);
         // get content
-        if($course['content_type']==='document'){
+        if ($course['content_type'] === 'document') {
             $course['content'] = $this->DocumentContentModel->getContent($course_id);
-        }
-        else if($course['content_type']==='video'){
+        } else if ($course['content_type'] === 'video') {
             $course['content'] = $this->VideoContentModel->getContent($course_id);
         }
 
         $categories = $this->CategoryModel->getAllCategories();
         $tags = $this->TagModel->getAllTags();
-        $this->render('/teacher/editeCourse', ['course' => $course,'categories' => $categories, 'tags' => $tags, 'csrf_token' => $_SESSION['csrf_token']]);
+        $this->render('/teacher/editeCourse', ['course' => $course, 'categories' => $categories, 'tags' => $tags, 'csrf_token' => $_SESSION['csrf_token']]);
+    }
+
+    // methode to submiit edite course
+    public function SubmitEditCourse($course_id)
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            if (isset($_POST['csrf_token']) && $_POST['csrf_token'] === $_SESSION['csrf_token']) {
+                $title = $_POST['title'];
+                $description = $_POST['description'];
+                $category_id = $_POST['category_id'];
+                $content_type = $_POST['content_type'];
+                $tags = $_POST['tags'];
+                $tagsIdsArray = explode(',', trim($tags));
+
+                // Update course data in the database
+                $courseUpdated = $this->CourseModel->editCourse($course_id, $title, $description, $category_id);
+
+                if ($courseUpdated) {
+                    // Update course tags: remove existing tags and insert the new ones
+                    $this->CourseTagsModel->deleteCourseTags($course_id);
+                    foreach ($tagsIdsArray as $tag_id) {
+                        $this->CourseTagsModel->addCourseTags($course_id, $tag_id);
+                    }
+
+                    // Update content
+                    if (isset($_FILES['content'])) {
+                        if ($_FILES['content']['error'] !== 4 && $_FILES['content']['size'] !== 0) {
+                            if ($content_type === 'video') {
+                                $oldContentUrl = $this->VideoContentModel->getContent($course_id)['video_url'];
+                                if ($oldContentUrl === NULL || basename($oldContentUrl) !== basename($_FILES['content']['name'])) {
+                                    $fileDetails = $this->uploadFile($content_type);
+                                    $this->VideoContentModel->editContent(['course_id' => $course_id, 'video_url' => $fileDetails['fileUrl'], 'duration' => $fileDetails['contentInfo']]);
+                                }
+                            } else if ($content_type === 'document') {
+                                $oldContentUrl = $this->DocumentContentModel->getContent($course_id)['document_url'];
+                                if ($oldContentUrl === NULL || basename($oldContentUrl) !== basename($_FILES['content']['name'])) {
+                                    $fileDetails = $this->uploadFile($content_type);
+                                    $this->DocumentContentModel->editContent(['course_id' => $course_id, 'document_url' => $fileDetails['fileUrl'], 'pages_number' => $fileDetails['contentInfo']]);
+                                }
+                            }
+                        }
+                    }
+
+                    // header("Location:/teacher/myCourses");
+                } else {
+                    echo 'Failed to update course in the database';
+                }
+            }
+        }
     }
 }
