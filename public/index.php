@@ -63,6 +63,7 @@ Route::post('/admin/deleteTag/{tag_id}', [AdminController::class, 'deleteTag']);
 // couese managment
 Route::get('/admin/courses', [AdminController::class, 'AllCourses']);
 Route::post('/admin/deletCourse/{course_id}', [AdminController::class, 'deletCourse']);
+Route::get('/admin/courseDetails/{course_id}', [BaseController::class, 'courseDetails']);
 
 
 
@@ -77,8 +78,7 @@ Route::get('/teacher/editeCourse/{course_id}', [TeacherController::class, 'edite
 Route::post('/teacher/SubmitEditCourse/{course_id}', [TeacherController::class, 'SubmitEditCourse']);
 Route::get('/teacher/enrollments/{course_id}', [TeacherController::class, 'classEnrollments']);
 Route::post('/teacher/acceptEnrollment/{enrollment_id}', [TeacherController::class,'acceptEnrollment']);
-
-
+Route::get('/teacher/courseDetails/{course_id}', [BaseController::class, 'courseDetails']);
 
 
 
@@ -88,6 +88,7 @@ Route::get('/student/dashboard', [BaseController::class, 'dashboard']);
 Route::get('/student/courses', [StudentController::class, 'courses']);
 Route::post('/student/enroll/{course_id}', [StudentController::class, 'enroll']);
 Route::get('/student/myCourses', [StudentController::class, 'myCourses']);
+Route::get('/student/courseDetails/{course_id}', [BaseController::class, 'courseDetails']);
 
 
 // Dispatch the request

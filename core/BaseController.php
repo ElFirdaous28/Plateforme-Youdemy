@@ -1,16 +1,22 @@
 <?php
 require_once(__DIR__ . '/../app/models/Course.php');
 require_once(__DIR__ . '/../app/models/CourseTags.php');
+require_once(__DIR__ . '/../app/models/DocumentContent.php');
+require_once(__DIR__ . '/../app/models/VideoContent.php');
 
 class BaseController
 {
     private $CourseModel;
     private $CourseTagsModel;
+    private $DocumentContentModel;
+    private $VideoContentModel;
     
     public function __construct()
     {
         $this->CourseModel = new Course();
         $this->CourseTagsModel = new CourseTags();
+        $this->DocumentContentModel = new DocumentContent();
+        $this->VideoContentModel = new VideoContent();
     }
     // Render a view
     public function render($view, $data = [])
@@ -63,5 +69,23 @@ class BaseController
                 header("Location: $sessionRole/dashboard");
             }
         }
+    }
+
+    // methode to see course details
+    public function courseDetails($course_id)
+    {
+        $course = $this->CourseModel->getCourseById($course_id);
+        // get tags
+        $course['tags'] = $this->CourseTagsModel->getCoursetags($course['course_id']);
+        // get content
+        if ($course['content_type'] === 'document') {
+            $course['content'] = $this->DocumentContentModel->getContent($course_id);
+        } else if ($course['content_type'] === 'video') {
+            $course['content'] = $this->VideoContentModel->getContent($course_id);
+        }
+        // echo '<pre>';
+        // var_dump($course);
+        // die;
+        $this->render('auth/courseDetails', ['course' => $course]);
     }
 }

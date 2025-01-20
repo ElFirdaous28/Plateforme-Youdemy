@@ -30,12 +30,13 @@ class StudentController extends BaseController
     {
         if (isset($_SESSION['user_loged_in_id'])) {
             $this->EnrollmentModel->createEnrollment($_SESSION['user_loged_in_id'], $course_id);
+            header("Location:/student/courses");
         } else {
             header("Location:/login");
         }
     }
 
-    // methode to show all courses
+    // methode to show stident enrolled in courses
     public function myCourses()
     {
         $courseEnrolled_in_ids = $this->EnrollmentModel->getacceptedEnrollmentsCoursesIds($_SESSION['user_loged_in_id']);
@@ -48,11 +49,6 @@ class StudentController extends BaseController
                 $studentCourses[] = $course;
             }
         }
-        // echo '<pre>';
-        // var_dump($studentCourses);
-        // die;
         $this->render('student/myCourses', ['studentCourses' => $studentCourses]);
     }
-    
-    
 }

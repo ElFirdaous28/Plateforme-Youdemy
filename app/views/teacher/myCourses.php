@@ -44,7 +44,7 @@
 
                                 <!-- actions td -->
                                 <td class="px-4 py-2 text-sm text-gray-600">
-                                    <?php if ($_SESSION['user_loged_in_role']==='teacher'): ?>
+                                    <?php if ($_SESSION['user_loged_in_role'] === 'teacher'): ?>
                                         <!-- Edit Icon -->
                                         <a href="/teacher/editeCourse/<?= $course['course_id'] ?>" class="text-[#2E5077] hover:text-[#3b82f6]" title="Edit Course">
                                             <i class="bx bx-edit text-xl"></i>
@@ -54,6 +54,10 @@
                                             <i class="bx bx-group text-xl"></i>
                                         </a>
                                     <?php endif ?>
+
+                                    <a href="/<?=$_SESSION['user_loged_in_role']?>/courseDetails/<?= $course['course_id'] ?>" class="text-[#2E5077] hover:text-[#3b82f6]" title="View Course Details">
+                                        <i class="bx bx-show text-xl"></i>
+                                    </a>
                                     <!-- Delete Icon -->
                                     <form action="/admin/deletCourse/<?= $course['course_id'] ?>" method="POST" class="inline ml-4">
                                         <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrf_token) ?>">
