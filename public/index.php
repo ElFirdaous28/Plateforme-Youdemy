@@ -87,6 +87,8 @@ Route::post('/teacher/acceptEnrollment/{enrollment_id}', [TeacherController::cla
 Route::get('/student/dashboard', [BaseController::class, 'dashboard']);
 Route::get('/student/courses', [StudentController::class, 'courses']);
 Route::post('/student/enroll/{course_id}', [StudentController::class, 'enroll']);
+Route::get('/student/myCourses', [StudentController::class, 'myCourses']);
+
 
 // Dispatch the request
 $router->dispatch($_SERVER['REQUEST_URI'], $_SERVER['REQUEST_METHOD']);

@@ -27,6 +27,22 @@ class Enrollment extends Db
     }
 
     // methode to get student's courses enrolled in
+    public function getacceptedEnrollmentsCoursesIds($student_id)
+    {
+        try {
+            $stmt = $this->conn->prepare("SELECT course_id FROM enrollments WHERE student_id = :student_id AND status !='requested'");
+            $stmt->bindParam(':student_id', $student_id, PDO::PARAM_INT);
+
+            $stmt->execute();
+            $course_ids = $stmt->fetchAll(PDO::FETCH_COLUMN);
+            return $course_ids;
+        } catch (PDOException $e) {
+            error_log("Error retrieving course IDs: " . $e->getMessage());
+            return false;
+        }
+    }
+
+    // methode to get student's courses enrolled in
     public function getEnrolledInCoursesIds($student_id)
     {
         try {
@@ -42,7 +58,7 @@ class Enrollment extends Db
         }
     }
 
-    // methode to get calss erolments
+    // methode to get course erolments
     public function getClassEnrollment($course_id)
     {
         try {

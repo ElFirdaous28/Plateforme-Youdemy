@@ -68,7 +68,10 @@ class Course extends Db
     public function getCourseById($course_id)
     {
         try {
-            $stmt = $this->conn->prepare("SELECT * FROM courses WHERE course_id = :course_id");
+            $stmt = $this->conn->prepare("SELECT course.*,cat.category_name,u.full_name as teacher_name FROM courses course
+                                          JOIN categories cat ON cat.category_id = course.category_id
+                                          JOIN users u ON u.user_id = course.teacher_id
+                                          WHERE course_id = :course_id");
             $stmt->bindParam(':course_id', $course_id);
             $stmt->execute();
             return $stmt->fetch(PDO::FETCH_ASSOC);
