@@ -63,8 +63,5 @@ class BaseController
                 header("Location: $sessionRole/dashboard");
             }
         }
-        else if($urlFirstPart==="enroll"){
-            header("Location:/login");
-        }
     }
 }

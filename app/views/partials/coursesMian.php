@@ -32,38 +32,25 @@
                         <?php endforeach; ?>
                     </div>
                 <?php endif; ?>
-
             </div>
 
-            <a href="/enroll/<?= $course['course_id'] ?>" class="mt-auto mb-4 w-11/12  self-center text-center px-4 py-2 text-sm font-bold text-white bg-[#2E5077] border-2 border-[#2E5077] rounded transition hover:bg-transparent hover:text-[#2E5077]">
-                Enroll Now
-            </a>
+            <!-- Enroll Form -->
+            <form action="/student/enroll/<?= $course['course_id'] ?>" method="POST" class="mt-auto mb-4 w-11/12 self-center text-center">
+                <?php if (isset($courseEnrolled_in_ids) && in_array($course['course_id'], $courseEnrolled_in_ids)): ?>
+                    <button
+                        type="submit"
+                        class="w-full px-4 py-2 text-sm font-bold text-white bg-[#2E5077] border-2 border-[#2E5077] rounded transition hover:bg-transparent hover:text-[#2E5077] cursor-not-allowed"
+                        disabled>
+                        Already Enrolled 
+                    </button>
+                <?php else: ?>
+                    <button
+                        type="submit"
+                        class="w-full px-4 py-2 text-sm font-bold text-white bg-[#2E5077] border-2 border-[#2E5077] rounded transition hover:bg-transparent hover:text-[#2E5077]">
+                        Enroll Now
+                    </button>
+                <?php endif; ?>
+            </form>
         </div>
     <?php endforeach; ?>
-</div>
-
-<!-- Pagination -->
-<div class="mt-6 flex justify-center">
-    <nav class="flex rounded-md shadow-sm">
-        <!-- Previous Page Link -->
-        <a href="?page=1" class="relative inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-l-md hover:bg-gray-50">
-            Previous
-        </a>
-
-        <!-- Page Numbers -->
-        <a href="?page=1" class="relative inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border-t border-b border-gray-300 hover:bg-gray-50">
-            1
-        </a>
-        <a href="?page=2" class="relative inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border-t border-b border-gray-300 hover:bg-gray-50">
-            2
-        </a>
-        <a href="?page=3" class="relative inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border-t border-b border-gray-300 hover:bg-gray-50">
-            3
-        </a>
-
-        <!-- Next Page Link -->
-        <a href="?page=2" class="relative inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-r-md hover:bg-gray-50">
-            Next
-        </a>
-    </nav>
 </div>
