@@ -8,6 +8,22 @@ class Enrollment extends Db
         parent::__construct();
     }
 
+    // get enrollment by id
+    public function getEnrollment($enrollment_id)
+    {
+
+        try {
+            $stmt = $this->conn->prepare("SELECT en.*,c.title,u.full_name,u.email FROM enrollments en
+                                            JOIN courses c ON c.course_id= en.course_id
+                                            JOIN users u ON u.user_id = en.student_id
+                                            WHERE en.enrollment_id=?");
+            $stmt->execute([$enrollment_id]);
+            return $stmt->fetch(PDO::FETCH_ASSOC); // Ensure associative array for clarity
+        } catch (PDOException $e) {
+            error_log("Error getting enrollment: " . $e->getMessage());
+            return false;
+        }
+    }
     // methode to add enrollment
     public function createEnrollment($student_id, $course_id)
     {

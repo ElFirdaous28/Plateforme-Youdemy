@@ -6,7 +6,7 @@ require_once(__DIR__ . '/../models/Tag.php');
 require_once(__DIR__ . '/../models/Course.php');
 require_once(__DIR__ . '/../models/CourseTags.php');
 
-require_once(__DIR__ . '/../services/sendTeacherActivationEmail.php');
+require_once(__DIR__ . '/../services/emailSender.php');
 class AdminController extends BaseController
 {
     private $UserModel;

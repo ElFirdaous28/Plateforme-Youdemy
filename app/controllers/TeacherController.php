@@ -9,6 +9,7 @@ require_once(__DIR__ . '/../models/CourseTags.php');
 require_once(__DIR__ . '/../models/Enrollment.php');
 
 require_once __DIR__ . '/../../vendor/autoload.php';
+require_once __DIR__ . '/../services/emailSender.php';
 
 use setasign\Fpdf\Fpdf;
 use setasign\Fpdi\Fpdi;
@@ -237,10 +238,14 @@ class TeacherController extends BaseController
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (isset($_POST['csrf_token']) && $_POST['csrf_token'] === $_SESSION['csrf_token']) {
+                $enrolmentDetails = $this->EnrollmentModel->getEnrollment($enrollment_id);
+                // echo '<pre>';
+                // var_dump($enrolmentDetails);
+                // die;
+                sendEnrollmentAcceptedEmail($enrolmentDetails['email'],$enrolmentDetails['full_name'],$enrolmentDetails['title']);
                 $this->EnrollmentModel->setStatus($enrollment_id, 'enrolled');
             }
         }
-
         // Output JavaScript to go back to the previous page
         echo "<script>window.history.back();</script>";
         exit();
