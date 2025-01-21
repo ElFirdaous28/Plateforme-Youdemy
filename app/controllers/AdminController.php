@@ -23,6 +23,11 @@ class AdminController extends BaseController
         $this->CourseTagsModel = new CourseTags();
     }
 
+    public function dashboard()
+    {
+        $this->render('/admin/dashboard', []);
+    }
+
     // all users view
     public function users()
     {
