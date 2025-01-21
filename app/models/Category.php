@@ -57,4 +57,21 @@ class Category extends Db
             error_log("Error deleting category: " . $e->getMessage());
         }
     }
+
+    public function getTopCategories() {
+        try {
+            $stmt = $this->conn->prepare("SELECT cat.category_name, COUNT(*) AS category_count
+                                          FROM courses co
+                                          JOIN categories cat ON cat.category_id = co.category_id
+                                          GROUP BY cat.category_name
+                                          ORDER BY category_count DESC
+                                          LIMIT 3");
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            error_log("Error getting top categories: " . $e->getMessage());
+            return false;
+        }
+    }
+    
 }

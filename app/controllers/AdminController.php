@@ -25,7 +25,17 @@ class AdminController extends BaseController
 
     public function dashboard()
     {
-        $this->render('/admin/dashboard', []);
+        $totalCoursesNumber = $this->CourseModel->getTotalCoursesNumber();
+        $topCategories = $this->CategoryModel->getTopCategories();
+        $topCoursesByNumnerStudnts = $this->CourseModel->getTopCoursesByEnrollment();
+        $topTeachers = $this->CourseModel->getTopTeachersByEnrollment();
+
+        $this->render('/admin/dashboard', [
+            'totalCoursesNumber'=>$totalCoursesNumber,
+            'topCategories'=>$topCategories,
+            'topCoursesByNumnerStudnts'=>$topCoursesByNumnerStudnts,
+            'topTeachers'=>$topTeachers,
+        ]);
     }
 
     // all users view
