@@ -50,13 +50,21 @@ class Course extends Db
         }
     }
 
-    // method to get all courses
-    public function getAllCourses()
+    // // method to get all courses
+
+
+    public function getAllCourses($limit, $offset)
     {
         try {
-            $stmt = $this->conn->prepare("SELECT c.*,cat.category_name,u.full_name as teacher_name FROM courses c
-                                          JOIN categories cat ON cat.category_id = c.category_id
-                                          JOIN users u ON u.user_id=c.teacher_id");
+            $stmt = $this->conn->prepare("
+            SELECT c.*, cat.category_name, u.full_name AS teacher_name 
+            FROM courses c
+            JOIN categories cat ON cat.category_id = c.category_id
+            JOIN users u ON u.user_id = c.teacher_id
+            LIMIT :limit OFFSET :offset
+        ");
+            $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
+            $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
             $stmt->execute();
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {

@@ -3,6 +3,7 @@ require_once(__DIR__ . '/../app/models/Course.php');
 require_once(__DIR__ . '/../app/models/CourseTags.php');
 require_once(__DIR__ . '/../app/models/DocumentContent.php');
 require_once(__DIR__ . '/../app/models/VideoContent.php');
+require_once(__DIR__ . '/../app/models/Category.php');
 
 class BaseController
 {
@@ -10,13 +11,15 @@ class BaseController
     private $CourseTagsModel;
     private $DocumentContentModel;
     private $VideoContentModel;
-    
+    private $CategoryModel;
+
     public function __construct()
     {
         $this->CourseModel = new Course();
         $this->CourseTagsModel = new CourseTags();
         $this->DocumentContentModel = new DocumentContent();
         $this->VideoContentModel = new VideoContent();
+        $this->CategoryModel = new Category();
     }
     // Render a view
     public function render($view, $data = [])
@@ -33,12 +36,27 @@ class BaseController
     }
     public function index()
     {
-        $courses = $this->CourseModel->getAllCourses();
-        // Add tags to each course
-        foreach ($courses as &$course) {
+        $limit = 8;
+        $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+        $offset = ($page - 1) * $limit;
+
+        $totalCourses = $this->CourseModel->getTotalCoursesNumber();
+        $totalPages = ceil($totalCourses / $limit);
+
+        $courses = $this->CourseModel->getAllCourses($limit, $offset);
+
+        foreach ($courses as $course) {
             $course['tags'] = $this->CourseTagsModel->getCoursetags($course['course_id']);
         }
-        $this->render('auth/index',['courses' => $courses, 'csrf_token' => $_SESSION['csrf_token']]);
+
+        $categories = $this->CategoryModel->getAllCategories();
+
+        $this->render('auth/index', [
+            'courses' => $courses,
+            'categories' => $categories,
+            'totalPages' => $totalPages,
+            'currentPage' => $page
+        ]);
     }
 
     public function unauthorized()
@@ -63,11 +81,10 @@ class BaseController
             } else if ($urlFirstPart === "login") {
                 header("Location: $sessionRole/dashboard");
             }
-        }
-        else{
+        } else {
             if (in_array($urlFirstPart, ['admin', 'teacher', 'student'])) {
-                    header("Location: /unauthorized");
-                    exit;
+                header("Location: /unauthorized");
+                exit;
             }
         }
     }

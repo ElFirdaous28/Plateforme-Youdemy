@@ -102,3 +102,20 @@
         </div>
     <?php endforeach; ?>
 </div>
+
+<!-- Pagination Links -->
+<div class="mt-10 flex justify-center space-x-2">
+    <?php if ($currentPage > 1): ?>
+        <a href="?page=<?= $currentPage - 1 ?>" class="px-3 py-1 bg-gray-200 text-gray-600 rounded">Previous</a>
+    <?php endif; ?>
+
+    <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+        <a href="?page=<?= $i ?>" class="px-3 py-1 <?= $i == $currentPage ? 'bg-[#2E5077] text-white' : 'bg-gray-200 text-gray-600' ?> rounded">
+            <?= $i ?>
+        </a>
+    <?php endfor; ?>
+
+    <?php if ($currentPage < $totalPages): ?>
+        <a href="?page=<?= $currentPage + 1 ?>" class="px-3 py-1 bg-gray-200 text-gray-600 rounded">Next</a>
+    <?php endif; ?>
+</div>
