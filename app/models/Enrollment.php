@@ -96,4 +96,21 @@ class Enrollment extends Db
             return false;
         }
     }
+
+
+    // Get the number of enrollments
+    public function getNumberEnrollments($course_id)
+    {
+        try {
+            $stmt = $this->conn->prepare("SELECT COUNT(*) AS student_count, c.title
+                                            FROM enrollments e
+                                            JOIN courses c ON c.course_id = e.course_id
+                                            WHERE e.course_id = ? AND e.status = 'enrolled';");
+            $stmt->execute([$course_id]);
+            return $stmt->fetch(PDO::FETCH_ASSOC); // Ensure associative array for clarity
+        } catch (PDOException $e) {
+            error_log("Error getting the number of enrollments: " . $e->getMessage());
+            return false;
+        }
+    }
 }

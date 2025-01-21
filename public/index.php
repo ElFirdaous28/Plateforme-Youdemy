@@ -38,7 +38,7 @@ Route::get('/logout', [AuthController::class, 'logout']);
 
 // admin routes
 // =========================================================================================================================================== 
-Route::get('/admin/dashboard', [BaseController::class, 'dashboard']);
+Route::get('/admin/dashboard', [AdminController::class, 'dashboard']);
 // users managmet routes
 Route::get('/admin/users', [AdminController::class, 'users']);
 Route::post('/admin/deleteUser/{user_id}', [AdminController::class, 'deleteUser']);
@@ -69,7 +69,7 @@ Route::get('/admin/courseDetails/{course_id}', [BaseController::class, 'courseDe
 
 // teacher routes
 // =========================================================================================================================================== 
-Route::get('/teacher/dashboard', [BaseController::class, 'dashboard']);
+Route::get('/teacher/dashboard', [TeacherController::class, 'dashboard']);
 Route::get('/teacher/addCourse', [TeacherController::class, 'addCourseView']);
 Route::post('/teacher/SubmitAddCourse', [TeacherController::class, 'SubmitAddCourse']);
 Route::get('/teacher/myCourses', [TeacherController::class, 'teacherCourses']);
@@ -84,7 +84,7 @@ Route::get('/teacher/courseDetails/{course_id}', [BaseController::class, 'course
 
 // student routes
 // =========================================================================================================================================== 
-Route::get('/student/dashboard', [BaseController::class, 'dashboard']);
+Route::get('/student/dashboard', [StudentController::class, 'dashboard']);
 Route::get('/student/courses', [StudentController::class, 'courses']);
 Route::post('/student/enroll/{course_id}', [StudentController::class, 'enroll']);
 Route::get('/student/myCourses', [StudentController::class, 'myCourses']);

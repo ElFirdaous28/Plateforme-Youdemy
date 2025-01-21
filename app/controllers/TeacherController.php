@@ -33,6 +33,11 @@ class TeacherController extends BaseController
         $this->CourseTagsModel = new CourseTags();
         $this->EnrollmentModel = new Enrollment();
     }
+    
+    public function dashboard()
+    {
+        $this->render('/teacher/dashboard', []);
+    }
 
     // method to show add course view
     public function addCourseView()

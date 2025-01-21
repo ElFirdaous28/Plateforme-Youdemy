@@ -40,11 +40,6 @@ class BaseController
         }
         $this->render('auth/index',['courses' => $courses, 'csrf_token' => $_SESSION['csrf_token']]);
     }
-    public function dashboard()
-    {
-        $role = $_SESSION["user_loged_in_role"];
-        $this->renderDashboard($role);
-    }
 
     public function unauthorized()
     {

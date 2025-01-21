@@ -1,13 +1,58 @@
 <h1 class="text-xl font-semibold pt-4 text-gray-700">Courses</h1>
-<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-10">
+<!-- Search and Filter -->
+<div class="mt-6 flex flex-wrap items-center justify-between gap-20">
+    <!-- Search by Title -->
+    <div class="flex-grow">
+        <input
+            type="text"
+            name="search_title"
+            placeholder="Search by Title"
+            class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
+    </div>
+
+    <!-- Search by Tags -->
+    <div class="flex-grow">
+        <input
+            type="text"
+            name="search_tags"
+            placeholder="Search by Tags"
+            class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
+    </div>
+
+    <!-- Search by Teacher Name -->
+    <div class="flex-grow">
+        <input
+            type="text"
+            name="search_teacher"
+            placeholder="Search by Teacher Name"
+            class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
+    </div>
+
+    <!-- Filter by Category -->
+    <div>
+        <select
+            name="category"
+            class="px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+            <option value="">All Categories</option>
+            <?php foreach ($categories as $category): ?>
+                <option value="<?= htmlspecialchars($category['category_id']) ?>">
+                    <?= htmlspecialchars($category['category_name']) ?>
+                </option>
+            <?php endforeach; ?>
+        </select>
+    </div>
+</div>
+
+
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-10">
     <?php foreach ($courses as $course): ?>
         <div class="bg-white border border-gray-300 rounded-lg shadow-md hover:shadow-xl transition-transform transform hover:scale-105 flex flex-col overflow-hidden">
             <!-- Course Cover -->
             <div class="w-full h-48 bg-gray-200 flex items-center justify-center rounded-t-lg">
                 <span class="text-gray-400">Course Cover</span>
             </div>
-            
-            <div class="p-6 flex flex-col flex-grow space-y-4">
+
+            <div class="px-6 py-1 flex flex-col flex-grow">
                 <!-- Title -->
                 <h3 class="text-xl font-semibold text-gray-700 truncate"><?= htmlspecialchars($course['title']) ?></h3>
 
@@ -38,7 +83,7 @@
             </div>
 
             <!-- Enroll Button -->
-            <form action="/student/enroll/<?= $course['course_id'] ?>" method="POST" class="mt-auto mb-4 w-11/12 self-center text-center">
+            <form action="/student/enroll/<?= $course['course_id'] ?>" method="POST" class="mt-auto mb-2 w-11/12 self-center text-center">
                 <?php if (isset($courseEnrolled_in_ids) && in_array($course['course_id'], $courseEnrolled_in_ids)): ?>
                     <button
                         type="submit"
