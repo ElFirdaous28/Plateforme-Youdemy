@@ -55,13 +55,9 @@
                         <?php foreach ($users as $user): ?>
                             <tr class="border-b border-gray-200 hover:bg-gray-50">
                                 <td class="px-8 py-2">
-                                    <?php if ($user['profile_picture']): ?>
-                                        <img src="/assets/usersPics/5.jpg" alt="Profile Picture" class="w-14 h-14 rounded-full object-cover">
-                                    <?php else: ?>
-                                        <div class="w-14 h-14 flex items-center justify-center bg-gray-200 text-gray-500 text-xs rounded-full">
-                                            No Pic
-                                        </div>
-                                    <?php endif; ?>
+                                    <div class="w-14 h-14 flex items-center justify-center bg-gray-200 text-gray-500 text-xs rounded-full">
+                                        No Pic
+                                    </div>
                                 </td>
                                 <td class="px-4 py-2 text-sm text-gray-600"><?= htmlspecialchars($user['full_name']) ?></td>
                                 <td class="px-4 py-2 text-sm text-gray-600"><?= htmlspecialchars($user['email']) ?></td>

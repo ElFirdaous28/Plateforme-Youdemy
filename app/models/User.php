@@ -34,7 +34,7 @@ class User extends Db
     {
 
         try {
-            $result = $this->conn->prepare("INSERT INTO users (full_name, email,password, role) VALUES (?, ?, ?, ?)");
+            $result = $this->conn->prepare("INSERT INTO users (full_name, email,password, role,status) VALUES (?, ?, ?, ?,?)");
             $result->execute($user);
             return $this->conn->lastInsertId();
         } catch (PDOException $e) {
@@ -93,5 +93,15 @@ class User extends Db
     {
         $changeStatus = $this->conn->prepare("UPDATE users SET status=? WHERE user_id=?");
         $changeStatus->execute([$newStatus, $idUser]);
+    }
+
+    // Method to check if an email exists
+    public function emailExists($email)
+    {
+        $checkEmail = $this->conn->prepare("SELECT COUNT(*) FROM users WHERE email=?");
+        $checkEmail->execute([$email]);
+
+        $emailCount = $checkEmail->fetchColumn();
+        return $emailCount > 0;
     }
 }

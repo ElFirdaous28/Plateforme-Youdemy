@@ -31,25 +31,30 @@ class AuthController extends BaseController
                 $email = $_POST['email'];
                 $password = $_POST['password'];
                 $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-                // status has also to take a value!!!
 
                 $role = $number_of_users == 0 ? "admin" : $_POST['role'];
+                $status = $role == "teacher" ? "inactive" : "active";
 
-                $user = [$full_name, $email, $hashed_password, $role];
+                $user = [$full_name, $email, $hashed_password, $role, $status];
+                if ($this->UserModel->emailExists($email) === 0) {
+                    $lastInsertId = $this->UserModel->register($user);
+                    $_SESSION['user_loged_in_id'] = $lastInsertId;
+                    $_SESSION['user_loged_in_role'] = $role;
+                    $_SESSION['user_loged_in_name'] = $full_name;
 
-                $lastInsertId = $this->UserModel->register($user);
-                $_SESSION['user_loged_in_id'] = $lastInsertId;
-                $_SESSION['user_loged_in_role'] = $role;
-                $_SESSION['user_loged_in_name'] = $full_name;
-
-                if ($lastInsertId && $role == "admin") {
-                    header('Location: /admin/dashboard');
-                } else if ($lastInsertId && $role == "teacher") {
-                    header('Location: /teacher/dashboard');
-                } else if ($lastInsertId && $role == "student") {
-                    header('Location: /student/dashboard');
+                    if ($lastInsertId && $role == "admin") {
+                        header('Location: /admin/dashboard');
+                    } else if ($lastInsertId && $role == "teacher") {
+                        header('Location: /teacher/dashboard');
+                    } else if ($lastInsertId && $role == "student") {
+                        header('Location: /student/dashboard');
+                    }
+                    exit;
                 }
-                exit;
+                else{
+                    $_SESSION["register_error"] = "This email is already taken. Please try another one.";
+                    echo "<script>window.history.back();</script>";
+                }
             }
         }
     }
@@ -61,17 +66,27 @@ class AuthController extends BaseController
                 $password = $_POST['password'];
                 $userData = [$email, $password];
                 $user = $this->UserModel->login($userData);
-                $role = $user['role'];
-                $_SESSION['user_loged_in_id'] = $user["user_id"];
-                $_SESSION['user_loged_in_role'] = $role;
-                $_SESSION['user_loged_in_name'] = $user['full_name'];
+                if ($user) {
+                    if ($user['status'] === 'active') {
+                        $role = $user['role'];
+                        $_SESSION['user_loged_in_id'] = $user["user_id"];
+                        $_SESSION['user_loged_in_role'] = $role;
+                        $_SESSION['user_loged_in_name'] = $user['full_name'];
 
-                if ($user && $role == "admin") {
-                    header('Location: /admin/dashboard');
-                } else if ($user && $role == "teacher") {
-                    header('Location: /teacher/dashboard');
-                } else if ($user && $role == "student") {
-                    header('Location: /student/dashboard');
+                        if ($role == "admin") {
+                            header('Location: /admin/dashboard');
+                        } else if ($user && $role == "student") {
+                            header('Location: /student/dashboard');
+                        } else if ($user && $role == "teacher") {
+                            header('Location: /teacher/dashboard');
+                        }
+                    } else {
+                        $_SESSION["login_error"] = "Your account is not active we will notify you when it is";
+                        echo "<script>window.history.back();</script>";
+                    }
+                } else {
+                    $_SESSION["login_error"] = "Incorrect email or password. Please try again";
+                    echo "<script>window.history.back();</script>";
                 }
             }
         }
