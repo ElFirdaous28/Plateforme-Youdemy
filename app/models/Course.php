@@ -64,7 +64,7 @@ class Course extends Db
         }
     }
 
-    public function getAllCoursesX($limit, $offset)
+    public function getAllCoursesX($limit, $offset, $search_value = null, $category = null)
     {
         try {
             $query = "SELECT c.*, cat.category_name, u.full_name AS teacher_name 
@@ -72,9 +72,35 @@ class Course extends Db
                   JOIN categories cat ON cat.category_id = c.category_id
                   JOIN users u ON u.user_id = c.teacher_id";
 
+            // Add filters for search_value and category
+            $conditions = [];
+
+            if ($search_value) {
+                $conditions[] = "(c.title LIKE :search_value OR u.full_name LIKE :search_value)";
+            }
+
+            if ($category) {
+                $conditions[] = "cat.category_id = :category";
+            }
+
+            if (!empty($conditions)) {
+                $query .= " WHERE " . implode(' AND ', $conditions);
+            }
+
+            // Add pagination
             $query .= " LIMIT :limit OFFSET :offset";
 
             $stmt = $this->conn->prepare($query);
+
+            // Bind parameters
+            if ($search_value) {
+                $stmt->bindValue(':search_value', '%' . $search_value . '%', PDO::PARAM_STR);
+            }
+
+            if ($category) {
+                $stmt->bindValue(':category', $category, PDO::PARAM_INT);
+            }
+
             $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
             $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
 

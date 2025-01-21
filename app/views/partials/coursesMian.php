@@ -1,31 +1,36 @@
 <h1 class="text-xl font-semibold pt-4 text-gray-700">Courses</h1>
 <!-- Search and Filter -->
 <div class="mt-6 flex flex-wrap items-center justify-between gap-20">
-    <!-- Search -->
-    <div class="flex-grow">
-        <input
-            type="text"
-            name="search"
-            placeholder="Search by Title, Tag or Teacher name"
-            class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
-    </div>
+    <!-- Search and Filter Form -->
+    <form id="searchForm" action="" method="GET" class="w-full flex gap-4">
+        <!-- Search -->
+        <div class="flex-grow w-4/5">
+            <input
+                value="<?php if (isset($_GET['search_value'])) echo htmlspecialchars($_GET['search_value']); ?>"
+                type="text"
+                name="search_value"
+                placeholder="Search by Title, Tag or Teacher name"
+                class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                onchange="this.form.submit()" />
+        </div>
 
-
-    <!-- Filter by Category -->
-    <div>
-        <select
-            name="category"
-            class="px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
-            <option value="">All Categories</option>
-            <?php foreach ($categories as $category): ?>
-                <option value="<?= htmlspecialchars($category['category_id']) ?>">
-                    <?= htmlspecialchars($category['category_name']) ?>
-                </option>
-            <?php endforeach; ?>
-        </select>
-    </div>
+        <!-- Filter by Category -->
+        <div>
+            <select
+                name="category"
+                class="px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                onchange="this.form.submit()">
+                <option value="">All Categories</option>
+                <?php foreach ($categories as $category): ?>
+                    <option value="<?= htmlspecialchars($category['category_id']) ?>"
+                        <?php if (isset($_GET['category']) && $_GET['category'] == $category['category_id']) echo 'selected'; ?>>
+                        <?= htmlspecialchars($category['category_name']) ?>
+                    </option>
+                <?php endforeach; ?>
+            </select>
+        </div>
+    </form>
 </div>
-
 
 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-10">
     <?php foreach ($courses as $course): ?>
