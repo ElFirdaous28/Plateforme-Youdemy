@@ -33,11 +33,25 @@ class TeacherController extends BaseController
         $this->CourseTagsModel = new CourseTags();
         $this->EnrollmentModel = new Enrollment();
     }
-    
+
     public function dashboard()
     {
-        $this->render('/teacher/dashboard', []);
+        $teacherId = $_SESSION['user_loged_in_id'];
+        $numberOfCourses = $this->CourseModel->getTeacherCourseCount($teacherId);
+        $courses = $this->CourseModel->getAllTeacherCourses($teacherId);
+
+        $coursesNumberEnrollments = [];
+        foreach ($courses as $course) {
+            $enrollmentCount = $this->EnrollmentModel->getNumberEnrollments($course['course_id']);
+            $coursesNumberEnrollments[] = [
+                'course_title' => $course['title'],
+                'enrollment_count' => $enrollmentCount['student_count']
+            ];
+        }
+
+        $this->render('/teacher/dashboard', ['numberOfCourses' => $numberOfCourses,'coursesNumberEnrollments' => $coursesNumberEnrollments]);
     }
+
 
     // method to show add course view
     public function addCourseView()
@@ -215,8 +229,8 @@ class TeacherController extends BaseController
     {
         $enrollments = $this->EnrollmentModel->getClassEnrollment($course_id) ?? [];
         $course = $this->CourseModel->getCourseById($course_id);
-    
-        $this->render('/teacher/enrollments', ['enrollments' => $enrollments,'course' => $course,'csrf_token' => $_SESSION['csrf_token']]);
+
+        $this->render('/teacher/enrollments', ['enrollments' => $enrollments, 'course' => $course, 'csrf_token' => $_SESSION['csrf_token']]);
     }
 
     public function acceptEnrollment($enrollment_id)
@@ -226,7 +240,7 @@ class TeacherController extends BaseController
                 $this->EnrollmentModel->setStatus($enrollment_id, 'enrolled');
             }
         }
-    
+
         // Output JavaScript to go back to the previous page
         echo "<script>window.history.back();</script>";
         exit();
