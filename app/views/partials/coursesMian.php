@@ -1,37 +1,20 @@
 <h1 class="text-xl font-semibold pt-4 text-gray-700">Courses</h1>
 <!-- Search and Filter -->
 <div class="mt-6 flex flex-wrap items-center justify-between gap-20">
-    <!-- Search by Title -->
+    <!-- Search -->
     <div class="flex-grow">
         <input
             type="text"
-            name="search_title"
-            placeholder="Search by Title"
+            name="search"
+            placeholder="Search by Title, Tag or Teacher name"
             class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
     </div>
 
-    <!-- Search by Tags -->
-    <div class="flex-grow">
-        <input
-            type="text"
-            name="search_tags"
-            placeholder="Search by Tags"
-            class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
-    </div>
-
-    <!-- Search by Teacher Name -->
-    <div class="flex-grow">
-        <input
-            type="text"
-            name="search_teacher"
-            placeholder="Search by Teacher Name"
-            class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
-    </div>
 
     <!-- Filter by Category -->
     <div>
         <select
-            name="category"
+            name="category_id"
             class="px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
             <option value="">All Categories</option>
             <?php foreach ($categories as $category): ?>
