@@ -106,4 +106,19 @@ class Course extends Db
             error_log("Error deleting Course: " . $e->getMessage());
         }
     }
+
+    // teacher number of courses
+    public function getTeacherCourseCount($teacher_id)
+    {
+        try {
+            $stmt = $this->conn->prepare("SELECT COUNT(*) AS course_count
+                                            FROM courses
+                                            WHERE teacher_id = ?;");
+            $stmt->execute([$teacher_id]);
+            return $stmt->fetchColumn();
+        } catch (PDOException $e) {
+            error_log("Error getting the number of courses for the teacher: " . $e->getMessage());
+            return false;
+        }
+    }
 }
