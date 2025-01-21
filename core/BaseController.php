@@ -69,6 +69,12 @@ class BaseController
                 header("Location: $sessionRole/dashboard");
             }
         }
+        else{
+            if (in_array($urlFirstPart, ['admin', 'teacher', 'student'])) {
+                    header("Location: /unauthorized");
+                    exit;
+            }
+        }
     }
 
     // methode to see course details
