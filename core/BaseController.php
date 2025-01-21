@@ -43,7 +43,12 @@ class BaseController
         $totalCourses = $this->CourseModel->getTotalCoursesNumber();
         $totalPages = ceil($totalCourses / $limit);
 
-        $courses = $this->CourseModel->getAllCoursesX($limit, $offset);
+        // Get category and search value from query params
+        $category_id = isset($_GET['category']) ? $_GET['category'] : null;
+        $search_value = isset($_GET['search_value']) ? $_GET['search_value'] : null;
+
+        // Pass the category_id and search_value to getAllCoursesX
+        $courses = $this->CourseModel->getAllCoursesX($limit, $offset, $search_value, $category_id);
 
         foreach ($courses as $course) {
             $course['tags'] = $this->CourseTagsModel->getCoursetags($course['course_id']);
