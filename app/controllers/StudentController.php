@@ -44,10 +44,7 @@ class StudentController extends BaseController
         $totalCourses = $this->CourseModel->getTotalCoursesNumber();
         $totalPages = ceil($totalCourses / $limit);
 
-        $category_id = $_GET['category_id'];
-        $searchValue= $_GET['search_value'];
-
-        $courses = $this->CourseModel->getAllCoursesX($limit, $offset,$category_id,$searchValue);
+        $courses = $this->CourseModel->getAllCoursesX($limit, $offset);
 
         foreach ($courses as $course) {
             $course['tags'] = $this->CourseTagsModel->getCoursetags($course['course_id']);
@@ -55,7 +52,6 @@ class StudentController extends BaseController
 
         $courseEnrolled_in_ids = $this->EnrollmentModel->getEnrolledInCoursesIds($_SESSION['user_loged_in_id']);
         $categories = $this->CategoryModel->getAllCategories();
-
         $this->render('student/courses', [
             'courses' => $courses,
             'courseEnrolled_in_ids' => $courseEnrolled_in_ids,
@@ -63,7 +59,7 @@ class StudentController extends BaseController
             'totalPages' => $totalPages,
             'currentPage' => $page,
         ]);
-    }
+    }  
 
     // methode to add enrolment
     public function enroll($course_id)

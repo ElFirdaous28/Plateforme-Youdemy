@@ -64,7 +64,7 @@ class Course extends Db
         }
     }
 
-    public function getAllCoursesX($limit, $offset, $category_id,$searchValue)
+    public function getAllCoursesX($limit, $offset)
     {
         try {
             $query = "SELECT c.*, cat.category_name, u.full_name AS teacher_name 
@@ -72,18 +72,9 @@ class Course extends Db
                   JOIN categories cat ON cat.category_id = c.category_id
                   JOIN users u ON u.user_id = c.teacher_id";
 
-            if ($category_id) {
-                $query .= " WHERE c.category_id = :category_id";
-            }
-
             $query .= " LIMIT :limit OFFSET :offset";
 
             $stmt = $this->conn->prepare($query);
-
-            // Bind values only when needed
-            if ($category_id) {
-                $stmt->bindValue(':category_id', $category_id, PDO::PARAM_INT);
-            }
             $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
             $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
 

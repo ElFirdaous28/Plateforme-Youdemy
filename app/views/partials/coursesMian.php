@@ -14,7 +14,7 @@
     <!-- Filter by Category -->
     <div>
         <select
-            name="category_id"
+            name="category"
             class="px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
             <option value="">All Categories</option>
             <?php foreach ($categories as $category): ?>
