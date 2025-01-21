@@ -22,19 +22,6 @@ class StudentController extends BaseController
         $this->render('/student/dashboard', []);
     }
 
-    // // methode to show all courses
-    // public function courses()
-    // {
-    //     $courseEnrolled_in_ids = $this->EnrollmentModel->getEnrolledInCoursesIds($_SESSION['user_loged_in_id']);
-    //     $categories = $this->CategoryModel->getAllCategories();
-    //     $courses = $this->CourseModel->getAllCourses();
-    //     // Add tags to each course
-    //     foreach ($courses as &$course) {
-    //         $course['tags'] = $this->CourseTagsModel->getCoursetags($course['course_id']);
-    //     }
-    //     $this->render('student/courses', ['courses' => $courses, 'courseEnrolled_in_ids' => $courseEnrolled_in_ids,'categories'=>$categories]);
-    // }
-
     public function courses()
     {
         $limit = 8;
