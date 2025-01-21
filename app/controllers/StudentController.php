@@ -44,14 +44,25 @@ class StudentController extends BaseController
         $totalCourses = $this->CourseModel->getTotalCoursesNumber();
         $totalPages = ceil($totalCourses / $limit);
 
-        $courses = $this->CourseModel->getAllCoursesX($limit, $offset);
+        // Get category and search value from query params
+        $category_id = isset($_GET['category']) ? $_GET['category'] : null;
+        $search_value = isset($_GET['search_value']) ? $_GET['search_value'] : null;
 
-        foreach ($courses as $course) {
-            $course['tags'] = $this->CourseTagsModel->getCoursetags($course['course_id']);
+        // Pass the category_id and search_value to getAllCoursesX
+        $courses = $this->CourseModel->getAllCoursesX($limit, $offset, $search_value, $category_id);
+
+        // Add tags to each course
+        foreach ($courses as $key => $course) {
+            $courses[$key]['tags'] = $this->CourseTagsModel->getCoursetags($course['course_id']);
         }
 
+        // Get courses the user is enrolled in
         $courseEnrolled_in_ids = $this->EnrollmentModel->getEnrolledInCoursesIds($_SESSION['user_loged_in_id']);
+
+        // Get all categories for the filter dropdown
         $categories = $this->CategoryModel->getAllCategories();
+
+        // Render the view
         $this->render('student/courses', [
             'courses' => $courses,
             'courseEnrolled_in_ids' => $courseEnrolled_in_ids,
@@ -59,7 +70,7 @@ class StudentController extends BaseController
             'totalPages' => $totalPages,
             'currentPage' => $page,
         ]);
-    }  
+    }
 
     // methode to add enrolment
     public function enroll($course_id)
