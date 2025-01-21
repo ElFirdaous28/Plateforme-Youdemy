@@ -121,4 +121,52 @@ class Course extends Db
             return false;
         }
     }
+
+    public function getTotalCoursesNumber()
+    {
+        try {
+            $stmt = $this->conn->prepare("SELECT COUNT(*) AS total_courses FROM courses");
+            $stmt->execute();
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            return $result['total_courses'];
+        } catch (PDOException $e) {
+            error_log("Error getting total courses: " . $e->getMessage());
+            return false;
+        }
+    }
+
+    public function getTopCoursesByEnrollment()
+    {
+        try {
+            $stmt = $this->conn->prepare("SELECT co.title, COUNT(*) AS student_number
+                                          FROM enrollments en
+                                          JOIN courses co ON co.course_id = en.course_id
+                                          GROUP BY en.course_id
+                                          ORDER BY student_number DESC
+                                          LIMIT 3");
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC); // Returns top 3 courses with the highest number of enrollments
+        } catch (PDOException $e) {
+            error_log("Error getting top courses by enrollment: " . $e->getMessage());
+            return false;
+        }
+    }
+
+    public function getTopTeachersByEnrollment()
+    {
+        try {
+            $stmt = $this->conn->prepare("SELECT u.full_name, COUNT(*) AS student_number
+                                        FROM enrollments en
+                                        JOIN courses co ON co.course_id = en.course_id
+                                        JOIN users u ON u.user_id = co.teacher_id
+                                        GROUP BY u.user_id
+                                        ORDER BY student_number DESC
+                                        LIMIT 3;");
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC); // Returns the top 3 teachers with their courses and the number of enrollments
+        } catch (PDOException $e) {
+            error_log("Error getting top teachers by enrollment: " . $e->getMessage());
+            return false;
+        }
+    }
 }
