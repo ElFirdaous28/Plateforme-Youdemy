@@ -37,13 +37,9 @@
                         <?php foreach ($inactiveTeachers as $inactiveTeacher): ?>
                             <tr class="border-b border-gray-200 hover:bg-gray-50">
                                 <td class="px-8 py-2">
-                                    <?php if ($inactiveTeacher['profile_picture']): ?>
-                                        <img src="/assets/usersPics/5.jpg" alt="Profile Picture" class="w-14 h-14 rounded-full object-cover">
-                                    <?php else: ?>
-                                        <div class="w-14 h-14 flex items-center justify-center bg-gray-200 text-gray-500 text-xs rounded-full">
-                                            No Pic
-                                        </div>
-                                    <?php endif; ?>
+                                    <div class="w-14 h-14 flex items-center justify-center bg-gray-200 text-gray-500 text-xs rounded-full">
+                                        No Pic
+                                    </div>
                                 </td>
                                 <td class="px-4 py-2 text-sm text-gray-600"><?= htmlspecialchars($inactiveTeacher['full_name']) ?></td>
                                 <td class="px-4 py-2 text-sm text-gray-600"><?= htmlspecialchars($inactiveTeacher['email']) ?></td>
@@ -53,7 +49,7 @@
                                         <input type="hidden" name="csrf_token" value="<?php echo $csrf_token; ?>">
                                         <input type="hidden" name="status" value="<?php echo $inactiveTeacher['status']; ?>">
                                         <button type="button" onclick="if (confirm('Are you sure you want to activate this user\'s status?')) { this.form.submit(); }"
-                                                class="inline-block py-1 px-2 text-xs font-semibold <?= $inactiveTeacher['status'] === 'active' ? 'text-green-800 bg-green-100' : 'text-yellow-800 bg-yellow-100' ?> rounded-full">
+                                            class="inline-block py-1 px-2 text-xs font-semibold <?= $inactiveTeacher['status'] === 'active' ? 'text-green-800 bg-green-100' : 'text-yellow-800 bg-yellow-100' ?> rounded-full">
                                             <?= htmlspecialchars($inactiveTeacher['status']) ?>
                                         </button>
                                     </form>

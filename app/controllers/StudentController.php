@@ -44,7 +44,7 @@ class StudentController extends BaseController
         $totalCourses = $this->CourseModel->getTotalCoursesNumber();
         $totalPages = ceil($totalCourses / $limit);
 
-        $courses = $this->CourseModel->getAllCourses($limit, $offset);
+        $courses = $this->CourseModel->getAllCoursesX($limit, $offset);
 
         foreach ($courses as $course) {
             $course['tags'] = $this->CourseTagsModel->getCoursetags($course['course_id']);
