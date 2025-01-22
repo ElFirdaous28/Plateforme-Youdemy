@@ -74,6 +74,7 @@ class BaseController
         $url = $_SERVER['REQUEST_URI'];
         $parts = explode('/', trim($url, '/'));
         $urlFirstPart = $parts[0] ?? '';
+        $urlSecondPart = $parts[1] ?? '';
 
         if (isset($_SESSION['user_loged_in_role'])) {
             $sessionRole = $_SESSION['user_loged_in_role'];
