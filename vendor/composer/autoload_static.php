@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInitee25872269cbc096436c81a2cb6bdcd5
+class ComposerStaticInit366a2ced046cf4383456a71125fc75b1
 {
     public static $prefixLengthsPsr4 = array (
         's' => 
@@ -46,8 +46,6 @@ class ComposerStaticInitee25872269cbc096436c81a2cb6bdcd5
         'TCPDF_FONTS' => __DIR__ . '/..' . '/tecnickcom/tcpdf/include/tcpdf_fonts.php',
         'TCPDF_FONT_DATA' => __DIR__ . '/..' . '/tecnickcom/tcpdf/include/tcpdf_font_data.php',
         'TCPDF_IMAGES' => __DIR__ . '/..' . '/tecnickcom/tcpdf/include/tcpdf_images.php',
-        'TCPDF_IMPORT' => __DIR__ . '/..' . '/tecnickcom/tcpdf/tcpdf_import.php',
-        'TCPDF_PARSER' => __DIR__ . '/..' . '/tecnickcom/tcpdf/tcpdf_parser.php',
         'TCPDF_STATIC' => __DIR__ . '/..' . '/tecnickcom/tcpdf/include/tcpdf_static.php',
         'getID3' => __DIR__ . '/..' . '/james-heinrich/getid3/getid3/getid3.php',
         'getID3_cached_dbm' => __DIR__ . '/..' . '/james-heinrich/getid3/getid3/extension.cache.dbm.php',
@@ -77,6 +75,7 @@ class ComposerStaticInitee25872269cbc096436c81a2cb6bdcd5
         'getid3_flac' => __DIR__ . '/..' . '/james-heinrich/getid3/getid3/module.audio.flac.php',
         'getid3_flv' => __DIR__ . '/..' . '/james-heinrich/getid3/getid3/module.audio-video.flv.php',
         'getid3_gif' => __DIR__ . '/..' . '/james-heinrich/getid3/getid3/module.graphic.gif.php',
+        'getid3_gpx' => __DIR__ . '/..' . '/james-heinrich/getid3/getid3/module.misc.gpx.php',
         'getid3_gzip' => __DIR__ . '/..' . '/james-heinrich/getid3/getid3/module.archive.gzip.php',
         'getid3_handler' => __DIR__ . '/..' . '/james-heinrich/getid3/getid3/getid3.php',
         'getid3_hpk' => __DIR__ . '/..' . '/james-heinrich/getid3/getid3/module.archive.hpk.php',
@@ -139,9 +138,9 @@ class ComposerStaticInitee25872269cbc096436c81a2cb6bdcd5
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInitee25872269cbc096436c81a2cb6bdcd5::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInitee25872269cbc096436c81a2cb6bdcd5::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInitee25872269cbc096436c81a2cb6bdcd5::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit366a2ced046cf4383456a71125fc75b1::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit366a2ced046cf4383456a71125fc75b1::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInit366a2ced046cf4383456a71125fc75b1::$classMap;
 
         }, null, ClassLoader::class);
     }
